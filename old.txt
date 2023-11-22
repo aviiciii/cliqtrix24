@@ -113,3 +113,33 @@ response.put("slides",slidesList);
 return response;
 
 
+
+
+# Slash Command
+
+info "Vercel";
+endpointUrl = "https://api.vercel.com/v6/deployments";
+requestParams = Map();
+requestParams.put("teamId","team_Db2XQGTUtAc8mAd56BvgkWGR");
+accessToken = "1SYYqCiatFFvsEBbA8G5pWqg";
+header = Map();
+header.put("Authorization","Bearer " + accessToken);
+response = invokeurl
+[
+	url :endpointUrl
+	type :GET
+	parameters:requestParams
+	headers:header
+];
+deployment = response.get("deployments");
+jsonList = toJSONList(deployment);
+first = jsonList.get(0);
+url = first.get("url");
+info url;
+card = Map();
+message = Map();
+card.put("title","latest deployment url");
+card.put("thumbnail","");
+message.put("card",card);
+message.put("text",url);
+return message;
