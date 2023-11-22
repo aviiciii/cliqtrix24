@@ -39,7 +39,7 @@ if(message.containsIgnoreCase("test")){
             };
         }
         // if deployed then add to deployed list
-        else {
+        else{
             row = {
                 "name": project.get("name"),
                 "owner": project.get("link").get("org"),
@@ -49,106 +49,107 @@ if(message.containsIgnoreCase("test")){
                 "url": "https://vercel.com/"+project.get("link").get("org")+"/"+project.get("link").get("repo")
             };
 			rows.add(row); 
-     }
-        // else add to not deployed list
-        // else add to not deployed list
+        }
+    }
+    
+
+    // TABLE
 		
-		response = map();
+    response = map();
 		
-response.put("text","Hey Harrish, Here are you projects\nPage no.01\nHint: Check out your public repository insights by clicking on the repository name.");
-bot = map();
-bot.put("name","Vercel");
-response.put("bot",bot);
+    response.put("text","Hey Harrish, Here are you projects\nPage no.01\nHint: Check out your public repository insights by clicking on the repository name.");
+    bot = map();
+    bot.put("name","Vercel");
+    response.put("bot",bot);
 
-card = map();
-card.put("title","Welcome to project section");
-card.put("theme","modern-inline");
+    card = map();
+    card.put("title","Welcome to project section");
+    card.put("theme","modern-inline");
 
-response.put("card",card);
+    response.put("card",card);
 
-buttonsList = list();
-buttonsList0 = map();
-buttonsList0.put("label","Next Page");
-action = map();
-action.put("type","open.url");
-data = map();
-data.put("web","https://cliq.zoho.com");
-action.put("data",data);
-buttonsList0.put("action",action);
-buttonsList.add(buttonsList0);
-response.put("buttons",buttonsList);
+    buttonsList = list();
+    buttonsList0 = map();
+    buttonsList0.put("label","Next Page");
+    action = map();
+    action.put("type","open.url");
+    data = map();
+    data.put("web","https://cliq.zoho.com");
+    action.put("data",data);
+    buttonsList0.put("action",action);
+    buttonsList.add(buttonsList0);
+    response.put("buttons",buttonsList);
 
-slidesList = list();
-slidesList0 = map();
-slidesList0.put("type","table");
-slidesList0.put("title","Title for your Table");
+    slidesList = list();
+    slidesList0 = map();
+    slidesList0.put("type","table");
+    slidesList0.put("title","Title for your Table");
 
-buttonsList = list();
-buttonsList0 = map();
-buttonsList0.put("label","Button 1");
-action = map();
-action.put("type","open.url");
-data = map();
-data.put("web","https://cliq.zoho.com");
-action.put("data",data);
-buttonsList0.put("action",action);
-buttonsList.add(buttonsList0);
-slidesList0.put("buttons",buttonsList);
-data = map();
-headersList = list();
+    buttonsList = list();
+    buttonsList0 = map();
+    buttonsList0.put("label","Button 1");
+    action = map();
+    action.put("type","open.url");
+    data = map();
+    data.put("web","https://cliq.zoho.com");
+    action.put("data",data);
+    buttonsList0.put("action",action);
+    buttonsList.add(buttonsList0);
+    slidesList0.put("buttons",buttonsList);
+    data = map();
+    headersList = list();
 
-headersList.add("Project");
-headersList.add("Owner");
-headersList.add("Deployment Status");
-headersList.add("Commits");
-data.put("headers",headersList);
-rowsList = list();
+    headersList.add("Project");
+    headersList.add("Owner");
+    headersList.add("Deployment Status");
+    headersList.add("Commits");
+    data.put("headers",headersList);
+    rowsList = list();
 
-info rows;
-for each row in rows{
 
-rowsList0 = map();
-rowsList0.put("Project","Repo1");
-rowsList0.put("Owner","harrish");
-rowsList0.put("Deployment Status","TICK");
-rowsList0.put("Commits","view");
+    for each row in rows{
 
-rowsList.add(rowsList0);
+        rowsList0 = map();
+        rowsList0.put("Project",row.get("name"));
+        rowsList0.put("Owner",row.get("owner"));
+        rowsList0.put("Deployment Status",row.get("prod"));
+        rowsList0.put("Commits",row.get("url"));
+
+        rowsList.add(rowsList0);
+    }
+
+    data.put("rows",rowsList);
+    slidesList0.put("data",data);
+    slidesList.add(slidesList0);
+    slidesList1 = map();
+    slidesList1.put("type","list");
+    slidesList1.put("title","Number of Deployed Projects Tick:");
+    buttonsList = list();
+    buttonsList0 = map();
+    buttonsList0.put("label","Button 1");
+    action = map();
+    action.put("type","open.url");
+    data = map();
+    data.put("web","https://cliq.zoho.com");
+    action.put("data",data);
+    buttonsList0.put("action",action);
+    buttonsList.add(buttonsList0);
+    slidesList1.put("buttons",buttonsList);
+    dataList = list();
+    dataList.add("project 1");
+    dataList.add("project 3");
+    dataList.add("project 5");
+    slidesList1.put("data",dataList);
+    slidesList.add(slidesList1);
+    response.put("slides",slidesList);
+
+		
 }
 
-data.put("rows",rowsList);
-slidesList0.put("data",data);
-slidesList.add(slidesList0);
-slidesList1 = map();
-slidesList1.put("type","list");
-slidesList1.put("title","Number of Deployed Projects Tick:");
-buttonsList = list();
-buttonsList0 = map();
-buttonsList0.put("label","Button 1");
-action = map();
-action.put("type","open.url");
-data = map();
-data.put("web","https://cliq.zoho.com");
-action.put("data",data);
-buttonsList0.put("action",action);
-buttonsList.add(buttonsList0);
-slidesList1.put("buttons",buttonsList);
-dataList = list();
-dataList.add("project 1");
-dataList.add("project 3");
-dataList.add("project 5");
-slidesList1.put("data",dataList);
-slidesList.add(slidesList1);
-response.put("slides",slidesList);
-return response;
-		
-}
-}
 
 
-// row_map = {"rows": rows};
+
 
 
 return response;
 	
-	// heyya
