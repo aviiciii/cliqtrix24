@@ -1,3 +1,121 @@
+BASEURL = "https://api.vercel.com/";
+ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
+
+response = Map();
+
+if(message.containsIgnoreCase("test")){
+	text = "Glad to hear that! :smile:";
+	
+	
+	// 	Get Projects
+	endpointUrl = BASEURL + "v9/projects";
+	headers = Map();
+	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+	
+	res = invokeUrl [
+		url: endpointUrl
+		type: GET
+		headers: headers
+		connection:"vercel"
+	];
+	
+
+	projects = toJSONList(res.get("projects"));
+	
+	rows = Collection();
+	
+	for each  project in projects{
+
+        // check if project is deployed
+        if (project.get("targets").get("production").get("alias") == null) {
+            // if deployed then add to deployed list
+            row = {
+                "name": project.get("name"),
+                "owner": project.get("link").get("org"),
+                "id": project.get("id"),
+                "repo": project.get("link").get("org")+ "/" + project.get("link").get("repo"),
+                "prod": "N/A",
+                "url": "https://vercel.com/"+project.get("link").get("org")+"/"+project.get("link").get("repo")
+            };
+        }
+        // if deployed then add to deployed list
+        else {
+            row = {
+                "name": project.get("name"),
+                "owner": project.get("link").get("org"),
+                "id": project.get("id"),
+                "repo": project.get("link").get("org")+ "/" + project.get("link").get("repo"),
+                "prod": project.get("targets").get("production").get("url"),
+                "url": "https://vercel.com/"+project.get("link").get("org")+"/"+project.get("link").get("repo")
+            };
+			rows.add(row); 
+     }
+        // else add to not deployed list
+        // else add to not deployed list
+		
+		response = map();
+		
+response.put("text","Hey Harrish, Here are you projects\nPage no.01\nHint: Check out your public repository insights by clicking on the repository name.");
+bot = map();
+bot.put("name","Vercel");
+response.put("bot",bot);
+
+card = map();
+card.put("title","Welcome to project section");
+card.put("theme","modern-inline");
+
+response.put("card",card);
+
+buttonsList = list();
+buttonsList0 = map();
+buttonsList0.put("label","Next Page");
+action = map();
+action.put("type","open.url");
+data = map();
+data.put("web","https://cliq.zoho.com");
+action.put("data",data);
+buttonsList0.put("action",action);
+buttonsList.add(buttonsList0);
+response.put("buttons",buttonsList);
+
+slidesList = list();
+slidesList0 = map();
+slidesList0.put("type","table");
+slidesList0.put("title","Title for your Table");
+
+buttonsList = list();
+buttonsList0 = map();
+buttonsList0.put("label","Button 1");
+action = map();
+action.put("type","open.url");
+data = map();
+data.put("web","https://cliq.zoho.com");
+action.put("data",data);
+buttonsList0.put("action",action);
+buttonsList.add(buttonsList0);
+slidesList0.put("buttons",buttonsList);
+data = map();
+headersList = list();
+
+headersList.add("Project");
+headersList.add("Owner");
+headersList.add("Deployment Status");
+headersList.add("Commits");
+data.put("headers",headersList);
+rowsList = list();
+
+info rows;
+for each row in rows{
+
+rowsList0 = map();
+rowsList0.put("Project","Repo1");
+rowsList0.put("Owner","harrish");
+rowsList0.put("Deployment Status","TICK");
+rowsList0.put("Commits","view");
+
+rowsList.add(rowsList0);
+}
+
 data.put("rows",rowsList);
 slidesList0.put("data",data);
 slidesList.add(slidesList0);
@@ -22,3 +140,15 @@ dataList.add("project 5");
 slidesList1.put("data",dataList);
 slidesList.add(slidesList1);
 response.put("slides",slidesList);
+return response;
+		
+}
+}
+
+
+// row_map = {"rows": rows};
+
+
+return response;
+	
+	
