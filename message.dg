@@ -39,7 +39,7 @@ if(message.containsIgnoreCase("test")){
             };
         }
         // if deployed then add to deployed list
-        else{
+        else {
             row = {
                 "name": project.get("name"),
                 "owner": project.get("link").get("org"),
@@ -51,13 +51,22 @@ if(message.containsIgnoreCase("test")){
 			rows.add(row); 
         }
     }
+	
+
+    // find if project is deployed
+    no_of_deployed = 0;
+    for each row in rows{
+        if (row.get("prod") != "N/A") {
+            no_of_deployed = no_of_deployed + 1;
+        }
+    }
     
 
     // TABLE
 		
     response = map();
 		
-    response.put("text","Hey Harrish, Here are you projects\nPage no.01\nHint: Check out your public repository insights by clicking on the repository name.");
+    response.put("text","Hey Buddy!");
     bot = map();
     bot.put("name","Vercel");
     response.put("bot",bot);
@@ -83,8 +92,9 @@ if(message.containsIgnoreCase("test")){
     slidesList = list();
     slidesList0 = map();
     slidesList0.put("type","table");
-    slidesList0.put("title","Title for your Table");
-
+    slidesList0.put("title","Your Projects");
+	
+	
     buttonsList = list();
     buttonsList0 = map();
     buttonsList0.put("label","Button 1");
@@ -96,6 +106,8 @@ if(message.containsIgnoreCase("test")){
     buttonsList0.put("action",action);
     buttonsList.add(buttonsList0);
     slidesList0.put("buttons",buttonsList);
+	
+	
     data = map();
     headersList = list();
 
@@ -106,27 +118,26 @@ if(message.containsIgnoreCase("test")){
     data.put("headers",headersList);
     rowsList = list();
 
+	for each row in rows{
+		rowsList0 = map();
+		rowsList0.put("Project",row.get("name"));
+		rowsList0.put("Owner",row.get("owner"));
+		rowsList0.put("Deployment Status",row.get("prod"));
+		rowsList0.put("Commits",row.get("url"));
 
-    for each row in rows{
-
-        rowsList0 = map();
-        rowsList0.put("Project",row.get("name"));
-        rowsList0.put("Owner",row.get("owner"));
-        rowsList0.put("Deployment Status",row.get("prod"));
-        rowsList0.put("Commits",row.get("url"));
-
-        rowsList.add(rowsList0);
-    }
+		rowsList.add(rowsList0);
+	}
 
     data.put("rows",rowsList);
     slidesList0.put("data",data);
     slidesList.add(slidesList0);
     slidesList1 = map();
     slidesList1.put("type","list");
-    slidesList1.put("title","Number of Deployed Projects Tick:");
-    buttonsList = list();
+    slidesList1.put("title","Summary: ");
+    
+	buttonsList = list();
     buttonsList0 = map();
-    buttonsList0.put("label","Button 1");
+    buttonsList0.put("label","Button 2");
     action = map();
     action.put("type","open.url");
     data = map();
@@ -135,21 +146,20 @@ if(message.containsIgnoreCase("test")){
     buttonsList0.put("action",action);
     buttonsList.add(buttonsList0);
     slidesList1.put("buttons",buttonsList);
+
     dataList = list();
-    dataList.add("project 1");
-    dataList.add("project 3");
-    dataList.add("project 5");
+
+    dataList.add("Deployed: "+ no_of_deployed);
+    dataList.add("Total: "+ "");
+    dataList.add("Kissa: "+ "");
     slidesList1.put("data",dataList);
     slidesList.add(slidesList1);
+	
+	
+	
     response.put("slides",slidesList);
 
 		
 }
 
-
-
-
-
-
 return response;
-	
