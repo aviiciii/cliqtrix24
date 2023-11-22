@@ -1,0 +1,66 @@
+BASEURL = "https://api.vercel.com/";
+ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
+
+response = Map();
+
+if(message.containsIgnoreCase("test")){
+	text = "Glad to hear that! :smile:";
+	
+	
+	// 	Get Projects
+	endpointUrl = BASEURL + "v9/projects";
+	headers = Map();
+	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+	
+	res = invokeUrl [
+		url: endpointUrl
+		type: GET
+		headers: headers
+		connection:"vercel"
+	];
+	
+
+	projects = toJSONList(res.get("projects"));
+	
+	rows = Collection();
+	
+	for each  project in projects{
+
+        // check if project is deployed
+        if (project.get("targets").get("production").get("alias") == null) {
+            // if deployed then add to deployed list
+            row = {
+                "name": project.get("name"),
+                "owner": project.get("link").get("org"),
+                "id": project.get("id"),
+                "repo": project.get("link").get("org")+ "/" + project.get("link").get("repo"),
+                "prod": "N/A",
+                "url": "https://vercel.com/"+project.get("link").get("org")+"/"+project.get("link").get("repo")
+            };
+        }
+        // if deployed then add to deployed list
+        else {
+            row = {
+                "name": project.get("name"),
+                "owner": project.get("link").get("org"),
+                "id": project.get("id"),
+                "repo": project.get("link").get("org")+ "/" + project.get("link").get("repo"),
+                "prod": project.get("targets").get("production").get("url"),
+                "url": "https://vercel.com/"+project.get("link").get("org")+"/"+project.get("link").get("repo")
+            };
+        }
+        // else add to not deployed list
+        // else add to not deployed list
+        rows.add(row); 
+		
+		
+}
+}
+
+
+// row_map = {"rows": rows};
+
+
+return return_txt;
+	
+	

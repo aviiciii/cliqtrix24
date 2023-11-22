@@ -1,0 +1,6 @@
+{
+    "text":"Hey Harrish, Here are you projects\nPage no.01\nHint: Check out your public repository insights by clicking on the repository name.",
+    "bot":{"name":"Vercel"},
+    "card":{"title":"Welcome to project section","theme":"modern-inline"}
+    ,"buttons":{
+        {"label":"Next Page","action":{"type":"open.url","data":{"web":"https://cliq.zoho.com"}}}},"slides":{{"type":"table","title":"Title for your Table","buttons":{{"label":"Button 1","action":{"type":"open.url","data":{"web":"https://cliq.zoho.com"}}}},"data":{"headers":{"Projects","Owner","Deployment Status","Commits"},"rows":{{"Projects":"Repo 1","Owner":"harrish","Deployment Status":"✅","Commits":"view"},{"Projects":"Repo 2","Owner":"harrish","Deployment Status":"❌","Commits":"view"},{"Projects":"Repo 3","Owner":"harrish","Deployment Status":"✅","Commits":"view"},{"Projects":"Repo 4","Owner":"harrish","Deployment Status":"❌","Commits":"view"},{"Projects":"Repo 5","Owner":"harrish","Deployment Status":"✅","Commits":"view"}}}},{"type":"list","title":"Number of Deployed Projects ✅:","data":{"project 1","project 3","project 5"}}}}

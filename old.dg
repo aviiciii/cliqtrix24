@@ -2,7 +2,8 @@
 
 //  Welcome handler
 response = Map();
-// newuser is a boolean which defines whether the user is a first time subscriber or not!
+// newuser is 
+a boolean which defines whether the user is a first time subscriber or not!
 if(newuser)
 {
 	response.put("text","Hey *" + user.get("first_name") + "* ! Thanks for adding me");
@@ -156,18 +157,196 @@ res = invokeUrl
 	connection:"vercel"
 ];
 
-names = Collection();
+
 projects = toJSONList(res.get("projects"));
+
+filtered = Collection();
 
 for each  project in projects
 {
-	names.add(project.get("name"));
+
 	pr = {
 		"name": project.get("name"),
 		"id": project.get("id")
-		"github": project.get("link").get("org")+ "/" + project.get("link").get("repo"),
-
+		"repo": project.get("link").get("org")+ "/" + project.get("link").get("repo"),
+		"org": project.get("link").get("org"),
+		"prod": project.get("targets").get("production").get("url"),
 	};
+
+    filtered.add(pr);
 
 
 }
+
+return filtered;
+
+// Sample json
+{
+            "accountId": "jx844PbSb4fRO4DJovVtdI0r",
+            "autoExposeSystemEnvs": true,
+            "autoAssignCustomDomains": true,
+            "autoAssignCustomDomainsUpdatedBy": "system",
+            "buildCommand": null,
+            "createdAt": 1700630061675,
+            "crons": {
+                "enabledAt": 1700630066883,
+                "disabledAt": null,
+                "updatedAt": 1700630066883,
+                "deploymentId": "dpl_7x6psxgiEQzdAMdxjWPDviF2VbJr",
+                "definitions": []
+            },
+            "devCommand": null,
+            "directoryListing": false,
+            "env": [],
+            "framework": null,
+            "gitForkProtection": true,
+            "gitLFS": false,
+            "id": "prj_EsZ9oyyMOezJl9kU3KYDrpi0U9oI",
+            "installCommand": null,
+            "lastRollbackTarget": null,
+            "lastAliasRequest": null,
+            "name": "shortlink",
+            "nodeVersion": "18.x",
+            "outputDirectory": null,
+            "publicSource": null,
+            "rootDirectory": null,
+            "serverlessFunctionRegion": "iad1",
+            "sourceFilesOutsideRootDirectory": true,
+            "ssoProtection": {
+                "deploymentType": "prod_deployment_urls_and_all_previews"
+            },
+            "updatedAt": 1700630066883,
+            "live": false,
+            "gitComments": {
+                "onCommit": false,
+                "onPullRequest": true
+            },
+            "link": {
+                "type": "github",
+                "repo": "clipboard",
+                "repoId": 627858186,
+                "org": "aviiciii",
+                "gitCredentialId": "cred_dc1d4c2cfbfed2d7db2cd0e7b7bda6fc0597b458",
+                "productionBranch": "main",
+                "sourceless": true,
+                "createdAt": 1700630061533,
+                "updatedAt": 1700630061533,
+                "deployHooks": []
+            },
+            "latestDeployments": [
+                {
+                    "alias": [
+                        "shortlink-iota.vercel.app",
+                        "shortlink-aviiciii.vercel.app",
+                        "shortlink-git-main-aviiciii.vercel.app"
+                    ],
+                    "aliasAssigned": 1700630067021,
+                    "aliasError": null,
+                    "automaticAliases": [
+                        "shortlink-aviiciii.vercel.app",
+                        "shortlink-git-main-aviiciii.vercel.app"
+                    ],
+                    "builds": [],
+                    "createdAt": 1700630063003,
+                    "createdIn": "sfo1",
+                    "creator": {
+                        "uid": "jx844PbSb4fRO4DJovVtdI0r",
+                        "email": "laavesh1@gmail.com",
+                        "username": "aviiciii",
+                        "githubLogin": "aviiciii"
+                    },
+                    "deploymentHostname": "shortlink-cjn7ulvek-aviiciii",
+                    "forced": false,
+                    "id": "dpl_7x6psxgiEQzdAMdxjWPDviF2VbJr",
+                    "meta": {
+                        "githubCommitAuthorName": "aviiciii",
+                        "githubCommitMessage": "removed ip whitelisting",
+                        "githubCommitOrg": "aviiciii",
+                        "githubCommitRef": "main",
+                        "githubCommitRepo": "clipboard",
+                        "githubCommitSha": "644d3ca069239103da65a745ba536f83669ecc92",
+                        "githubDeployment": "1",
+                        "githubOrg": "aviiciii",
+                        "githubRepo": "clipboard",
+                        "githubRepoOwnerType": "User",
+                        "githubCommitRepoId": "627858186",
+                        "githubRepoId": "627858186",
+                        "githubRepoVisibility": "public",
+                        "githubCommitAuthorLogin": "aviiciii",
+                        "branchAlias": "shortlink-git-main-aviiciii.vercel.app"
+                    },
+                    "name": "shortlink",
+                    "plan": "hobby",
+                    "private": true,
+                    "readyState": "READY",
+                    "readySubstate": "PROMOTED",
+                    "target": "production",
+                    "teamId": null,
+                    "type": "LAMBDAS",
+                    "url": "shortlink-cjn7ulvek-aviiciii.vercel.app",
+                    "userId": "jx844PbSb4fRO4DJovVtdI0r",
+                    "withCache": false,
+                    "buildingAt": 1700630064517,
+                    "readyAt": 1700630066532,
+                    "previewCommentsEnabled": true
+                }
+            ],
+            "targets": {
+                "production": {
+                    "alias": [
+                        "shortlink-iota.vercel.app",
+                        "shortlink-aviiciii.vercel.app",
+                        "shortlink-git-main-aviiciii.vercel.app"
+                    ],
+                    "aliasAssigned": 1700630067021,
+                    "aliasError": null,
+                    "automaticAliases": [
+                        "shortlink-aviiciii.vercel.app",
+                        "shortlink-git-main-aviiciii.vercel.app"
+                    ],
+                    "builds": [],
+                    "createdAt": 1700630063003,
+                    "createdIn": "sfo1",
+                    "creator": {
+                        "uid": "jx844PbSb4fRO4DJovVtdI0r",
+                        "email": "laavesh1@gmail.com",
+                        "username": "aviiciii",
+                        "githubLogin": "aviiciii"
+                    },
+                    "deploymentHostname": "shortlink-cjn7ulvek-aviiciii",
+                    "forced": false,
+                    "id": "dpl_7x6psxgiEQzdAMdxjWPDviF2VbJr",
+                    "meta": {
+                        "githubCommitAuthorName": "aviiciii",
+                        "githubCommitMessage": "removed ip whitelisting",
+                        "githubCommitOrg": "aviiciii",
+                        "githubCommitRef": "main",
+                        "githubCommitRepo": "clipboard",
+                        "githubCommitSha": "644d3ca069239103da65a745ba536f83669ecc92",
+                        "githubDeployment": "1",
+                        "githubOrg": "aviiciii",
+                        "githubRepo": "clipboard",
+                        "githubRepoOwnerType": "User",
+                        "githubCommitRepoId": "627858186",
+                        "githubRepoId": "627858186",
+                        "githubRepoVisibility": "public",
+                        "githubCommitAuthorLogin": "aviiciii",
+                        "branchAlias": "shortlink-git-main-aviiciii.vercel.app"
+                    },
+                    "name": "shortlink",
+                    "plan": "hobby",
+                    "private": true,
+                    "readyState": "READY",
+                    "readySubstate": "PROMOTED",
+                    "target": "production",
+                    "teamId": null,
+                    "type": "LAMBDAS",
+                    "url": "shortlink-cjn7ulvek-aviiciii.vercel.app",
+                    "userId": "jx844PbSb4fRO4DJovVtdI0r",
+                    "withCache": false,
+                    "buildingAt": 1700630064517,
+                    "readyAt": 1700630066532,
+                    "previewCommentsEnabled": true
+                }
+            }
+        },
