@@ -1,6 +1,6 @@
-# bot
+// bot
 
-# Welcome handler
+//  Welcome handler
 response = Map();
 // newuser is a boolean which defines whether the user is a first time subscriber or not!
 if(newuser)
@@ -12,8 +12,7 @@ else
 	response.put("text","I'm Backkkkk! :wink:");
 }
 return response;
-
-# Message handler
+// Message handler
 response = Map();
 if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
 {
@@ -114,8 +113,7 @@ return response;
 
 
 
-
-# Slash Command
+// Slash Command
 
 info "Vercel";
 endpointUrl = "https://api.vercel.com/v6/deployments";
@@ -143,3 +141,33 @@ card.put("thumbnail","");
 message.put("card",card);
 message.put("text",url);
 return message;
+
+
+// 	Get Projects
+endpointUrl = BASEURL + "v9/projects";
+headers = Map();
+headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+
+res = invokeUrl
+[
+	url: endpointUrl
+	type: GET
+	headers: headers
+	connection:"vercel"
+];
+
+names = Collection();
+projects = toJSONList(res.get("projects"));
+
+for each  project in projects
+{
+	names.add(project.get("name"));
+	pr = {
+		"name": project.get("name"),
+		"id": project.get("id")
+		"github": project.get("link").get("org")+ "/" + project.get("link").get("repo"),
+
+	};
+
+
+}
