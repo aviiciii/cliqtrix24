@@ -1,0 +1,123 @@
+
+// response = map();
+// response.put("text","Hey Harrish, Here are you projects\nPage no. 01\nHint: Check out your public repository insights by clicking on the repository name.");
+// bot = map();
+// bot.put("name","Vercel");
+// response.put("bot",bot);
+// card = map();
+// card.put("title","Welcome to project section");
+// card.put("theme","modern-inline");
+// response.put("card",card);
+// buttonsList = list();
+// buttonsList0 = map();
+// buttonsList0.put("label","Next Page");
+// action = map();
+// action.put("type","open.url");
+// data = map();
+// data.put("web","https://cliq.zoho.com");
+// action.put("data",data);
+// buttonsList0.put("action",action);
+// buttonsList.add(buttonsList0);
+// response.put("buttons",buttonsList);
+// slidesList = list();
+// slidesList0 = map();
+// slidesList0.put("type","table");
+// buttonsList = list();
+// buttonsList0 = map();
+// buttonsList0.put("label","Button 1");
+// action = map();
+// action.put("type","open.url");
+// data = map();
+// data.put("web","https://cliq.zoho.com");
+// action.put("data",data);
+// buttonsList0.put("action",action);
+// buttonsList.add(buttonsList0);
+// slidesList0.put("buttons",buttonsList);
+// data = map();
+// headersList = list();
+// headersList.add("Projects");
+// headersList.add("Owner");
+// headersList.add("Deployment Status");
+// headersList.add("Commits");
+// data.put("headers",headersList);
+// rowsList = list();
+// rowsList0 = map();
+// rowsList0.put("Projects","Repo 1");
+// rowsList0.put("Owner","harrish");
+// rowsList0.put("Deployment Status","✅");
+// rowsList0.put("Commits","view");
+// rowsList.add(rowsList0);
+// rowsList1 = map();
+// rowsList1.put("Projects","Repo 2");
+// rowsList1.put("Owner","harrish");
+// rowsList1.put("Deployment Status","❌");
+// rowsList1.put("Commits","view");
+// rowsList.add(rowsList1);
+// rowsList2 = map();
+// rowsList2.put("Projects","Repo 3");
+// rowsList2.put("Owner","harrish");
+// rowsList2.put("Deployment Status","✅");
+// rowsList2.put("Commits","view");
+// rowsList.add(rowsList2);
+// rowsList3 = map();
+// rowsList3.put("Projects","Repo 4");
+// rowsList3.put("Owner","harrish");
+// rowsList3.put("Deployment Status","❌");
+// rowsList3.put("Commits","view");
+// rowsList.add(rowsList3);
+// rowsList4 = map();
+// rowsList4.put("Projects","Repo 5");
+// rowsList4.put("Owner","harrish");
+// rowsList4.put("Deployment Status","✅");
+// rowsList4.put("Commits","view");
+// rowsList.add(rowsList4);
+// data.put("rows",rowsList);
+// slidesList0.put("data",data);
+// slidesList.add(slidesList0);
+// slidesList1 = map();
+// slidesList1.put("type","list");
+// slidesList1.put("title","Number of Deployed Projects ✅:");
+// dataList = list();
+// dataList.add("project 1");
+// dataList.add("project 3");
+// dataList.add("project 5");
+// slidesList1.put("data",dataList);
+// slidesList.add(slidesList1);
+// response.put("slides",slidesList);
+response = Map();
+if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
+{
+	text = "Hey " + user.get("first_name") + "! Hope you are doing well! :wink:";
+	response.put("suggestions",{"list":{{"text":"Let's get started!"}}});
+}
+else if(message.equals("Let's get started!"))
+{
+	text = "Glad to hear that! :smile:";
+	text = "Choose any option from below";
+	response.put("suggestions",{"list":{{"text":"Recent Deployments"},{"text":"Older Deployments"},{"text":"View All Deployments"}}});
+}
+else if(message.equals("Recent Deployments"))
+{
+	text = "Pull recent deployments";
+}
+else if(message.equals("Older Deployments"))
+{
+	text = "Pull Older Deployments";
+}
+else if(message.equals("View All Deployments"))
+{
+	return {"text":"Hey Harrish, Here are you projects\nPage no.01\nHint: Check out your public repository insights by clicking on the repository name.","bot":{"name":"Vercel"},"card":{"title":"Welcome to project section","theme":"modern-inline"},"buttons":{{"label":"Next Page","action":{"type":"open.url","data":{"web":"https://cliq.zoho.com"}}}},"slides":{{"type":"table","title":"Title for your Table","buttons":{{"label":"Button 1","action":{"type":"open.url","data":{"web":"https://cliq.zoho.com"}}}},"data":{"headers":{"Projects","Owner","Deployment Status","Commits"},"rows":{{"Projects":"Repo 1","Owner":"harrish","Deployment Status":"✅","Commits":"view"},{"Projects":"Repo 2","Owner":"harrish","Deployment Status":"❌","Commits":"view"},{"Projects":"Repo 3","Owner":"harrish","Deployment Status":"✅","Commits":"view"},{"Projects":"Repo 4","Owner":"harrish","Deployment Status":"❌","Commits":"view"},{"Projects":"Repo 5","Owner":"harrish","Deployment Status":"✅","Commits":"view"}}}},{"type":"list","title":"Number of Deployed Projects ✅:","data":{"project 1","project 3","project 5"}}}};
+}
+else if(message.containsIgnoreCase("ticket"))
+{
+	//Try this case with the context handler. 
+	text = "Welcome to the Zylker Ticket Booking Portal! I'll need a few details to book the ticket.";
+	context = {"id":"personal_details","timeout":"300","params":{{"name":"name","question":"Please enter your name."},{"name":"age","question":"How old are you? :smile:"},{"name":"sex","question":"Gender:","suggestions":{"list":{{"text":"Male"},{"text":"Female"}}}}}};
+	response.put("context",context);
+}
+else
+{
+	text = "Messaging me for the first time? Come say a Hi ! :grinning:";
+}
+response.put("text",text);
+return response;
