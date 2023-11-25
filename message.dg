@@ -3,7 +3,14 @@ BASEURL = "https://api.vercel.com/";
 ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
 userFirstName = user.get("first_name");
 response = Map();
-if(message.containsIgnoreCase("test"))
+if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
+{
+	text = "Hi! How you doin'? :wink:";
+    response.put("text",text);
+	response.put("suggestions",{"list":{{"text":"View Projects"},{"text":"List Deployments"}}});
+}
+
+if(message.containsIgnoreCase("View Projects"))
 {
 	text = "Glad to hear that! :smile:";
 	// 	Get Projects
@@ -92,7 +99,7 @@ if(message.containsIgnoreCase("test"))
 		rowsList0 = Map();
 		rowsList0.put("Project",row.get("name"));
 		rowsList0.put("Owner",row.get("owner"));
-		rowsList0.put("Deployment URL","https://"+row.get("prod"));
+		rowsList0.put("Deployment URL","https://" + row.get("prod"));
 		rowsList0.put("Open Project",row.get("url"));
 		rowsList.add(rowsList0);
 	}
@@ -102,7 +109,7 @@ if(message.containsIgnoreCase("test"))
 	slidesList1 = Map();
 	slidesList1.put("type","text");
 	slidesList1.put("title","Summary");
-	slidesList1.put("data","Deployed: "+no_of_deployed +"\nTotal: "+no_of_deployed +"\nOthers:");
+	slidesList1.put("data","Deployed: " + no_of_deployed + "\nTotal: " + no_of_deployed + "\nOthers:");
 	slidesList.add(slidesList1);
 	response.put("slides",slidesList);
 	response.put("slides",slidesList);
