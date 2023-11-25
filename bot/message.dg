@@ -204,30 +204,18 @@ else if(message.containsIgnoreCase("List Deployments"))
 	rows = Collection();
 	for each  deployment in deployments
 	{
+		if(deployment.get("target") == null){
+				type = "PR Preview";
+		}
+		else{
+			type = "Production";
+		}
 		// check if project is deployed
-		if(deployment.get("inspectorUrl") == null)
-		{
-			if(deployment.get("target") == null)
-			{
-				type = "Preview";
-			}
-			else
-			{
-				type = deployment.get("target");
-			}
+		if(deployment.get("inspectorUrl") == null){
 			row = {"name":deployment.get("name"),"type":type,"inspect":"N/A","url":deployment.get("url")};
 		}
 		// if deployed then add to deployed list
-		else
-		{
-			if(deployment.get("target") == null)
-			{
-				type = "Preview";
-			}
-			else
-			{
-				type = deployment.get("target");
-			}
+		else{
 			row = {"name":deployment.get("name"),"type":type,"inspect":deployment.get("inspectorUrl"),"url":deployment.get("url")};
 		}
 		rows.add(row);
@@ -263,7 +251,7 @@ else if(message.containsIgnoreCase("List Deployments"))
 		rowsList0.put("Type",row.get("type"));
 		rowsList0.put("Preview","[View](https://" + row.get("url") + ")");
 		rowsList0.put("Details","[Know More](" + row.get("inspect") + ")");
-		rowsList0.put("Testing","[+Testing](invoke.function|getdeployment)");
+		rowsList0.put("Testing","[+Testing](invoke.function|QuickActions)");
 		rowsList.add(rowsList0);
 	}
 	data.put("rows",rowsList);
