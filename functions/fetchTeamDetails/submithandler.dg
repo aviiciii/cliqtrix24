@@ -1,0 +1,168 @@
+// Constants
+BASEURL = "https://api.vercel.com/";
+ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
+
+// row.put("View Details","[+:bug: Info](invoke.function|issues|scott.fisher@zylker.com|" + portalproject + "-" + bug.get("id") + ") ");
+
+if(target.get("teamId") != null){
+
+    buttonid = arguments.get("key").toList("-");
+    ID = buttonid.get(1);
+    
+    // Get Team Details
+    endpointUrl = BASEURL + "v2/teams/" + ID;
+
+    // Get Team Details
+    team = invokeurl
+    [
+        url : endpointUrl
+        type : GET
+        headers : [
+            "Authorization":"Bearer " + ACCESS_TOKEN
+        ]
+    ];
+
+    // Get Team Details
+    endpointUrl = BASEURL + "v2/teams/"+ ID +"/members";
+
+    // Get Team Details
+    team_members = invokeurl
+    [
+        url : endpointUrl
+        type : GET
+        headers : [
+            "Authorization":"Bearer " + ACCESS_TOKEN
+        ]
+    ];
+
+    // count team members
+    team_members = team_members.toJSONList("members");
+    team_members_count = team_members.size();
+
+    if_owner = false;
+    if (team.get("membership").get("role") == "owner"){
+        if_owner = true;
+    }
+
+    // 	Get Projects
+    endpointUrl = endpointUrl + "v9/projects?teamId=" + team_id;
+
+	headers = Map();
+	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+	res = invokeurl
+	[
+		url :endpointUrl
+		type :GET
+		headers:headers
+		connection:"vercel"
+	];
+	projects = toJSONList(res.get("projects"));
+
+    count_projects= projects.size();
+
+
+    endpointUrl = BASEURL + "v6/deployments?teamId=" + team_id;
+
+	
+	res = invokeurl
+	[
+		url :endpointUrl
+		type :GET
+		headers:headers
+		connection:"vercel"
+	];
+	deployments = toJSONList(res.get("deployments"));
+    count_deployments = deployments.size();
+
+    // Output Table
+    response = Map();
+    response.put("text","Team Details");
+    bot = Map();
+    bot.put("name","Vercel");
+    response.put("bot",bot);
+    card = Map();
+    card.put("title","Quick Actions");
+    card.put("theme","modern-inline");
+    response.put("card",card);
+
+    slidesList = list();
+    slidesList0 = Map();
+    slidesList0.put("type","text");
+    slidesList0.put("title","Team:");
+    slidesList0.put("data",team.get("name"));
+    slidesList.add(slidesList0);
+
+    slidesList1 = Map();
+    slidesList1.put("type","text");
+    slidesList1.put("title","ID");
+    slidesList1.put("data",team.get("id"));
+    slidesList.add(slidesList1);
+
+    slidesList2 = Map();
+    slidesList2.put("type","text");
+    slidesList2.put("title","No. of Members:");
+
+    buttonsList = list();
+    buttonsList0 = Map();
+    buttonsList0.put("label","View Members");
+    action = Map();
+    action.put("type","open.url");
+    data = Map();
+    data.put("web","https://cliq.zoho.com");
+    action.put("data",data);
+
+    buttonsList0.put("action",action);
+    buttonsList.add(buttonsList0);
+    slidesList2.put("buttons",buttonsList);
+    slidesList2.put("data", team_members_count);
+    slidesList.add(slidesList2);
+
+    slidesList3 = Map();
+    slidesList3.put("type","text");
+    slidesList3.put("title","No of Projects:");
+    buttonsList = list();
+    buttonsList0 = Map();
+    buttonsList0.put("label","View Projects");
+    action = Map();
+    action.put("type","open.url");
+    data = Map();
+    data.put("web","https://cliq.zoho.com");
+    action.put("data",data);
+    buttonsList0.put("action",action);
+    buttonsList.add(buttonsList0);
+    slidesList3.put("buttons",buttonsList);
+    slidesList3.put("data",count_projects);
+    slidesList.add(slidesList3);
+
+    slidesList4 = Map();
+    slidesList4.put("type","text");
+    slidesList4.put("title","Total Deployments");
+    buttonsList = list();
+    buttonsList0 = Map();
+    buttonsList0.put("label","View Deployments");
+    action = Map();
+    action.put("type","open.url");
+    data = Map();
+    data.put("web","https://cliq.zoho.com");
+    action.put("data",data);
+    buttonsList0.put("action",action);
+    buttonsList.add(buttonsList0);
+
+    buttonsList1 = Map();
+    buttonsList1.put("label","Open in Vercel");
+    buttonsList1.put("type","+");
+    action = Map();
+    action.put("type","open.url");
+    data = Map();
+    data.put("web","https://cliq.zoho.com");
+    action.put("data",data);
+    buttonsList1.put("action",action);
+    buttonsList.add(buttonsList1);
+    slidesList4.put("buttons",buttonsList);
+    slidesList4.put("data",count_deployments);
+    slidesList.add(slidesList4);
+    response.put("slides",slidesList);
+}else{
+    response.put("text","Button Integration Error");
+}
+return response;
