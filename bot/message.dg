@@ -43,6 +43,7 @@ else if(message.containsIgnoreCase("View Projects"))
 	response_map = zoho.cliq.getRecords("verceldb",query_map);
 	record_id = 0;
 	
+	// get team id	
 	team_id = null;
 	if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size() > 0)
 	{
@@ -164,7 +165,32 @@ else if(message.containsIgnoreCase("List Deployments"))
 {
 	text = "Glad to hear that! :smile:";
 	// 	Get Projects
+	// query data
+	query_map = Map();
+	criteria_string = "userid==" + userid;
+	query_map.put("criteria",criteria_string);
+	response_map = zoho.cliq.getRecords("verceldb",query_map);
+	record_id = 0;
+	
+	// get team id	
+	team_id = null;
+	if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size() > 0)
+	{
+		team_id = response_map.get("list").get(0).get("teamid");
+		if (team_id =="personal")
+		{
+			team_id = null;
+		}
+	}
+
+	
 	endpointUrl = BASEURL + "v6/deployments";
+	if (team_id != null)
+	{
+		endpointUrl = endpointUrl + "?teamId=" + team_id;
+	}
+	
+	
 	headers = Map();
 	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
 	res = invokeurl
