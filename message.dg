@@ -208,7 +208,7 @@ else if(message.containsIgnoreCase("List Deployments"))
 		rowsList0 = Map();
 		rowsList0.put("Project",row.get("name"));
 		rowsList0.put("Type",row.get("type"));
-		rowsList0.put("Preview","[View](https://" + row.get("url") + ")");
+		rowsList0.put("Preview","[View](open.url|https://" + row.get("url") + ")");
 		rowsList0.put("Details","[Know More](" + row.get("inspect") + ")");
 		rowsList0.put("Testing","[+Testing](invoke.function|getdeployments)");
 		rowsList.add(rowsList0);
