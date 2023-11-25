@@ -1,0 +1,5 @@
+
+inputs = list();
+// inputs.add({"type":"select","trigger_on_change":true,"name":"teamid","label":"Select Team","hint":"Choose from your teams","placeholder":"Personal","mandatory":true,"options":options});
+form = {"type":"form","title":"Change Team","hint":"Select your Vercel Team.","name":"ID","version":1,"button_label":"Change","actions":{"submit":{"type":"invoke.function","name":"changeTeam"}},"inputs":inputs};
+return form;

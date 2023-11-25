@@ -208,15 +208,41 @@ else if(message.containsIgnoreCase("List Deployments"))
 		rowsList0 = Map();
 		rowsList0.put("Project",row.get("name"));
 		rowsList0.put("Type",row.get("type"));
-		rowsList0.put("Preview","[View](open.url|https://" + row.get("url") + ")");
+		rowsList0.put("Preview","[View](https://" + row.get("url") + ")");
 		rowsList0.put("Details","[Know More](" + row.get("inspect") + ")");
-		rowsList0.put("Testing","[+Testing](invoke.function|getdeployments)");
+		rowsList0.put("Testing","[+Testing](invoke.function|getdeployment)");
 		rowsList.add(rowsList0);
 	}
 	data.put("rows",rowsList);
 	slidesList0.put("data",data);
 	slidesList.add(slidesList0);
 	response.put("slides",slidesList);
+}
+// Change Teams--------------------------------------------
+else if(message.containsIgnoreCase("Change Team") || message.containsIgnoreCase("Change Teams") || message.containsIgnoreCase("Switch Team"))
+{
+	// Get Teams
+	endpointUrl = BASEURL + "v2/teams";
+	headers = Map();
+	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+	res = invokeurl
+	[
+		url :endpointUrl
+		type :GET
+		headers:headers
+		connection:"vercel"
+	];
+	teams = toJSONList(res.get("teams"));
+	options = list();
+	options.add({"label":"Personal","value":"personal"});
+	for each  team in teams
+	{
+		options.add({"label":team.get("name"),"value":team.get("id")});
+	}
+	inputs = list();
+	inputs.add({"type":"select","trigger_on_change":true,"name":"teamid","label":"Select Team","hint":"Choose from your teams","placeholder":"Personal","mandatory":true,"options":options});
+	form = {"type":"form","title":"Change Team","hint":"Select your Vercel Team.","name":"ID","version":1,"button_label":"Change","actions":{"submit":{"type":"invoke.function","name":"changeTeam"}},"inputs":inputs};
+	return form;
 }
 else
 {
