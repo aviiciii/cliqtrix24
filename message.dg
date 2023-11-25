@@ -1,16 +1,16 @@
-
+// Constants
 BASEURL = "https://api.vercel.com/";
 ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
+
 userFirstName = user.get("first_name");
 response = Map();
+
 if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
 {
 	text = "Hi! How you doin'? :wink:";
     response.put("text",text);
 	response.put("suggestions",{"list":{{"text":"View Projects"},{"text":"List Deployments"}}});
-}
-
-if(message.containsIgnoreCase("View Projects"))
+} else if(message.containsIgnoreCase("View Projects"))
 {
 	text = "Glad to hear that! :smile:";
 	// 	Get Projects
@@ -113,9 +113,7 @@ if(message.containsIgnoreCase("View Projects"))
 	slidesList.add(slidesList1);
 	response.put("slides",slidesList);
 	response.put("slides",slidesList);
-}
-
-if(message.containsIgnoreCase("List Deployments")){
+} else if(message.containsIgnoreCase("List Deployments")){
     text = "Glad to hear that! :smile:";
     // 	Get Projects
     endpointUrl = BASEURL + "v6/deployments";
@@ -212,6 +210,10 @@ if(message.containsIgnoreCase("List Deployments")){
     slidesList.add(slidesList0);
     response.put("slides",slidesList);
 
+} else{
+    text = "Sorry, I didn't get that. :confused:";
+    response.put("text",text);
+    response.put("suggestions",{"list":{{"text":"View Projects"},{"text":"List Deployments"}}});
 }
 
 
