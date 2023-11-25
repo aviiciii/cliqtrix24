@@ -1,165 +1,110 @@
+
 BASEURL = "https://api.vercel.com/";
 ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
-
+userFirstName = user.get("first_name");
 response = Map();
-
-if(message.containsIgnoreCase("test")){
+if(message.containsIgnoreCase("test"))
+{
 	text = "Glad to hear that! :smile:";
-	
-	
 	// 	Get Projects
 	endpointUrl = BASEURL + "v9/projects";
 	headers = Map();
 	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
-	
-	res = invokeUrl [
-		url: endpointUrl
-		type: GET
-		headers: headers
+	res = invokeurl
+	[
+		url :endpointUrl
+		type :GET
+		headers:headers
 		connection:"vercel"
 	];
-	
-
 	projects = toJSONList(res.get("projects"));
-	
 	rows = Collection();
-	
-	for each  project in projects{
-
-        // check if project is deployed
-        if (project.get("targets").get("production").get("alias") == null) {
-            // if deployed then add to deployed list
-            row = {
-                "name": project.get("name"),
-                "owner": project.get("link").get("org"),
-                "id": project.get("id"),
-                "repo": project.get("link").get("org")+ "/" + project.get("link").get("repo"),
-                "prod": "N/A",
-                "url": "https://vercel.com/"+project.get("link").get("org")+"/"+project.get("link").get("repo")
-            };
-        }
-        // if deployed then add to deployed list
-        else {
-            row = {
-                "name": project.get("name"),
-                "owner": project.get("link").get("org"),
-                "id": project.get("id"),
-                "repo": project.get("link").get("org")+ "/" + project.get("link").get("repo"),
-                "prod": project.get("targets").get("production").get("url"),
-                "url": "https://vercel.com/"+project.get("link").get("org")+"/"+project.get("link").get("repo")
-            };
-			rows.add(row); 
-        }
-    }
-	
-
-    // find if project is deployed
-    no_of_deployed = 0;
-    for each row in rows{
-        if (row.get("prod") != "N/A") {
-            no_of_deployed = no_of_deployed + 1;
-        }
-    }
-    
-
-    // TABLE
-		
-    response = map();
-		
-    response.put("text","Hey Buddy!");
-    bot = map();
-    bot.put("name","Vercel");
-    response.put("bot",bot);
-
-    card = map();
-    card.put("title","Welcome to project section");
-    card.put("theme","modern-inline");
-
-    response.put("card",card);
-
-    buttonsList = list();
-    buttonsList0 = map();
-    buttonsList0.put("label","Next Page");
-    action = map();
-    action.put("type","open.url");
-    data = map();
-    data.put("web","https://cliq.zoho.com");
-    action.put("data",data);
-    buttonsList0.put("action",action);
-    buttonsList.add(buttonsList0);
-    response.put("buttons",buttonsList);
-
-    slidesList = list();
-    slidesList0 = map();
-    slidesList0.put("type","table");
-    slidesList0.put("title","Your Projects");
-	
-	
-    buttonsList = list();
-    buttonsList0 = map();
-    buttonsList0.put("label","Button 1");
-    action = map();
-    action.put("type","open.url");
-    data = map();
-    data.put("web","https://cliq.zoho.com");
-    action.put("data",data);
-    buttonsList0.put("action",action);
-    buttonsList.add(buttonsList0);
-    slidesList0.put("buttons",buttonsList);
-	
-	
-    data = map();
-    headersList = list();
-
-    headersList.add("Project");
-    headersList.add("Owner");
-    headersList.add("Deployment Status");
-    headersList.add("Commits");
-    data.put("headers",headersList);
-    rowsList = list();
-
-	for each row in rows{
-		rowsList0 = map();
+	for each  project in projects
+	{
+		// check if project is deployed
+		if(project.get("targets").get("production").get("alias") == null)
+		{
+			// if deployed then add to deployed list
+			row = {"name":project.get("name"),"owner":project.get("link").get("org"),"id":project.get("id"),"repo":project.get("link").get("org") + "/" + project.get("link").get("repo"),"prod":"N/A","url":"https://vercel.com/" + project.get("link").get("org") + "/" + project.get("link").get("repo")};
+		}
+		// if deployed then add to deployed list
+		else
+		{
+			row = {"name":project.get("name"),"owner":project.get("link").get("org"),"id":project.get("id"),"repo":project.get("link").get("org") + "/" + project.get("link").get("repo"),"prod":project.get("targets").get("production").get("url"),"url":"https://vercel.com/" + project.get("link").get("org") + "/" + project.get("link").get("repo")};
+			rows.add(row);
+		}
+	}
+	// find if project is deployed
+	no_of_deployed = 0;
+	for each  row in rows
+	{
+		if(row.get("prod") != "N/A")
+		{
+			no_of_deployed = no_of_deployed + 1;
+		}
+	}
+	// TABLE
+	response = Map();
+	response.put("text","Hey, " + userFirstName + "!");
+	bot = Map();
+	bot.put("name","Vercel");
+	response.put("bot",bot);
+	card = Map();
+	card.put("title","Welcome to project section");
+	card.put("theme","modern-inline");
+	response.put("card",card);
+	buttonsList = list();
+	buttonsList0 = Map();
+	buttonsList0.put("label","Next Page");
+	action = Map();
+	action.put("type","open.url");
+	data = Map();
+	data.put("web","https://cliq.zoho.com");
+	action.put("data",data);
+	buttonsList0.put("action",action);
+	buttonsList.add(buttonsList0);
+	response.put("buttons",buttonsList);
+	slidesList = list();
+	slidesList0 = Map();
+	slidesList0.put("type","table");
+	slidesList0.put("title","Your Projects");
+	buttonsList = list();
+	buttonsList0 = Map();
+	buttonsList0.put("label","Open Vercel");
+	action = Map();
+	action.put("type","open.url");
+	data = Map();
+	data.put("web","https://vercel.com/dashboard");
+	action.put("data",data);
+	buttonsList0.put("action",action);
+	buttonsList.add(buttonsList0);
+	slidesList0.put("buttons",buttonsList);
+	data = Map();
+	headersList = list();
+	headersList.add("Project");
+	headersList.add("Owner");
+	headersList.add("Deployment URL");
+	headersList.add("Open Project");
+	data.put("headers",headersList);
+	rowsList = list();
+	for each  row in rows
+	{
+		rowsList0 = Map();
 		rowsList0.put("Project",row.get("name"));
 		rowsList0.put("Owner",row.get("owner"));
-		rowsList0.put("Deployment Status",row.get("prod"));
-		rowsList0.put("Commits",row.get("url"));
-
+		rowsList0.put("Deployment URL","https://"+row.get("prod"));
+		rowsList0.put("Open Project",row.get("url"));
 		rowsList.add(rowsList0);
 	}
-
-    data.put("rows",rowsList);
-    slidesList0.put("data",data);
-    slidesList.add(slidesList0);
-    slidesList1 = map();
-    slidesList1.put("type","list");
-    slidesList1.put("title","Summary: ");
-    
-	buttonsList = list();
-    buttonsList0 = map();
-    buttonsList0.put("label","Button 2");
-    action = map();
-    action.put("type","open.url");
-    data = map();
-    data.put("web","https://cliq.zoho.com");
-    action.put("data",data);
-    buttonsList0.put("action",action);
-    buttonsList.add(buttonsList0);
-    slidesList1.put("buttons",buttonsList);
-
-    dataList = list();
-
-    dataList.add("Deployed: "+ no_of_deployed);
-    dataList.add("Total: "+ "");
-    dataList.add("Kissa: "+ "");
-    slidesList1.put("data",dataList);
-    slidesList.add(slidesList1);
-	
-	
-	
-    response.put("slides",slidesList);
-
-		
+	data.put("rows",rowsList);
+	slidesList0.put("data",data);
+	slidesList.add(slidesList0);
+	slidesList1 = Map();
+	slidesList1.put("type","text");
+	slidesList1.put("title","Summary");
+	slidesList1.put("data","Deployed: "+no_of_deployed +"\nTotal: "+no_of_deployed +"\nOthers:");
+	slidesList.add(slidesList1);
+	response.put("slides",slidesList);
+	response.put("slides",slidesList);
 }
-
 return response;
