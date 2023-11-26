@@ -23,9 +23,43 @@ if(message.containsIgnoreCase("teams"))
 	];
 	teams = toJSONList(res.get("teams"));
 	// Create buttons
-	info teams;
-	text = "[+Testing](invoke.function|teamDetails)";
-	response.put("text",text);
+
+
+
+	response = Map();
+	response.put("text","The Teams that your are part of in Vercel");
+	bot = Map();
+	bot.put("name","Vercel");
+	response.put("bot",bot);
+	card = Map();
+	card.put("title","Team Details");
+	card.put("theme","modern-inline");
+	response.put("card",card);
+	slidesList = list();
+	slidesList0 = Map();
+	slidesList0.put("type","table");
+	slidesList0.put("title","Your Teams");
+	data = Map();
+	headersList = list();
+	headersList.add("Name");
+	headersList.add("Role");
+	headersList.add("Details");
+	data.put("headers",headersList);
+	rowsList = list();
+	for each team in teams{
+			rowsList0 = Map();
+			rowsList0.put("Name",team.get("name"));
+			rowsList0.put("Role",team.get("membership").get("role"));
+			rowsList0.put("Details","[View more](invoke.function|teamDetails|" + userEmail + "|" + team.get("id") + ")");
+			rowsList.add(rowsList0);
+	}
+	data.put("rows",rowsList);
+	slidesList0.put("data",data);
+	slidesList.add(slidesList0);
+	response.put("slides",slidesList);
+
+	return response;
+
 }
 // Hello Handler -------------------------------------------------------
 else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
