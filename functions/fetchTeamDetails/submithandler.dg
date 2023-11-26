@@ -131,7 +131,7 @@ buttonsList0.put("label","View Deployments");
 action = Map();
 action.put("type","invoke.function");
 data = Map();
-data.put("name","teamDetails");
+data.put("name","getdeployments");
 action.put("data",data);
 arguments=Map();
 arguments.put("key", ID);
