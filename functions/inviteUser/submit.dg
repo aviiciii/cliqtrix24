@@ -1,0 +1,38 @@
+// Constants
+BASEURL = "https://api.vercel.com/";
+ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
+headers = Map();
+headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+
+
+
+
+
+userid = user.get("id");
+response = Map();
+formValues = form.get("values");
+
+// new values
+
+email = formValues.get("email").get("value");
+role = formValues.get("role").get("value");
+team_id = formValues.get("team_id").get("value");
+
+endpointUrl = BASEURL + "v2/teams/" + team_id + "/members";
+
+parameters = Map();
+parameters.put("email",email);
+
+parameters.put("role",role);
+
+res = invokeUrl [
+    url: endpointUrl
+    type: POST
+    parameters: parameters
+];
+
+
+
+
+response.put("text","Sent Invite");
+return response;

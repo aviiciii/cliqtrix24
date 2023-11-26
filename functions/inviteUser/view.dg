@@ -1,0 +1,58 @@
+{
+"type": "form",
+"title": "Invite User",
+"name": "team-invite",
+"hint": "Invite a User to your Vercel Team",
+"button_label": "Add",
+"inputs": [
+{
+"name": "email",
+"label": "Email",
+"placeholder": "user@example.com",
+"min_length": "0",
+"max_length": "25",
+"mandatory": true,
+"type": "text",
+"format": "email"
+},
+{
+"name": "role",
+"label": "Select Role",
+"placeholder": "Choose from the list of options",
+"max_selections": "1",
+"multiple": false,
+"mandatory": true,
+"type": "dynamic_select",
+"options": [
+{
+"value": "OWNER",
+"label": "Team Owner"
+},
+{
+"value": "MEMBER",
+"label": "Team Member"
+},
+{
+"value": "VIEWER",
+"label": "Viewer"
+},
+{
+"value": "DEVELOPER",
+"label": "Project Developer"
+},
+{
+"value": "BILLING",
+"label": "Billing Manager"
+},
+{
+"value": "CONTRIBUTOR",
+"label": "Contributor"
+}
+]
+}
+],
+"action": {
+"type": "invoke.function",
+"name": "function"
+}
+}
