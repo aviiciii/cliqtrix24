@@ -47,11 +47,11 @@ if(message.containsIgnoreCase("teams"))
 	data.put("headers",headersList);
 	rowsList = list();
 	for each team in teams{
-			rowsList0 = Map();
-			rowsList0.put("Name",team.get("name"));
-			rowsList0.put("Role",team.get("membership").get("role"));
-			rowsList0.put("Details","[View more](invoke.function|teamDetails|" + userEmail + "|" + team.get("id") + ")");
-			rowsList.add(rowsList0);
+		rowsList0 = Map();
+		rowsList0.put("Name",team.get("name"));
+		rowsList0.put("Role",team.get("membership").get("role"));
+		rowsList0.put("Details","[View more](invoke.function|teamDetails|" + userEmail + "|" + team.get("id") + ")");
+		rowsList.add(rowsList0);
 	}
 	data.put("rows",rowsList);
 	slidesList0.put("data",data);
