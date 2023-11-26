@@ -5,6 +5,11 @@
 "hint": "Invite a User to your Vercel Team",
 "button_label": "Add",
 "inputs": [
+    {
+"name": "team_id",
+"value": team_id,
+"type": "hidden"
+},
 {
 "name": "email",
 "label": "Email",
@@ -53,6 +58,6 @@
 ],
 "action": {
 "type": "invoke.function",
-"name": "function"
+"name": "inviteUser"
 }
 }

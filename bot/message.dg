@@ -6,8 +6,79 @@ userFirstName = user.get("first_name");
 userEmail = user.get("email");
 userid = user.get("id");
 response = Map();
+
+// Testing ----------------------------------------
+if (message.containsIgnoreCase("test")){
+	team_id = "team_Db2XQGTUtAc8mAd56BvgkWGR";
+	return {
+"type": "form",
+"title": "Invite User",
+"name": "team-invite",
+"hint": "Invite a User to your Vercel Team",
+"button_label": "Add",
+"inputs": [
+    {
+"name": "team_id",
+"value": team_id,
+"type": "hidden"
+},
+{
+"name": "email",
+"label": "Email",
+"placeholder": "user@example.com",
+"min_length": "0",
+"max_length": "25",
+"mandatory": true,
+"type": "text",
+"format": "email"
+},
+{
+"name": "role",
+"label": "Select Role",
+"placeholder": "Choose from the list of options",
+"max_selections": "1",
+"multiple": false,
+"mandatory": true,
+"type": "dynamic_select",
+"options": [
+{
+"value": "OWNER",
+"label": "Team Owner"
+},
+{
+"value": "MEMBER",
+"label": "Team Member"
+},
+{
+"value": "VIEWER",
+"label": "Viewer"
+},
+{
+"value": "DEVELOPER",
+"label": "Project Developer"
+},
+{
+"value": "BILLING",
+"label": "Billing Manager"
+},
+{
+"value": "CONTRIBUTOR",
+"label": "Contributor"
+}
+]
+}
+],
+"action": {
+"type": "invoke.function",
+"name": "inviteUser"
+}
+};
+
+}
+
+
 // View Teams ------------------------------------
-if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("my teams") || message.containsIgnoreCase("all teams"))
+else if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("my teams") || message.containsIgnoreCase("all teams"))
 {
 	text = "Select a team";
 	// Get Teams
@@ -23,9 +94,6 @@ if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("my te
 	];
 	teams = toJSONList(res.get("teams"));
 	// Create buttons
-
-
-
 	response = Map();
 	response.put("text","The Teams that your are part of in Vercel");
 	bot = Map();
@@ -46,7 +114,8 @@ if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("my te
 	headersList.add("Details");
 	data.put("headers",headersList);
 	rowsList = list();
-	for each team in teams{
+	for each  team in teams
+	{
 		rowsList0 = Map();
 		rowsList0.put("Name",team.get("name"));
 		rowsList0.put("Role",team.get("membership").get("role"));
@@ -57,9 +126,7 @@ if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("my te
 	slidesList0.put("data",data);
 	slidesList.add(slidesList0);
 	response.put("slides",slidesList);
-
 	return response;
-
 }
 // Hello Handler -------------------------------------------------------
 else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))

@@ -14,15 +14,14 @@ formValues = form.get("values");
 
 // new values
 
-email = formValues.get("email").get("value");
+email = formValues.get("email");
 role = formValues.get("role").get("value");
-team_id = formValues.get("team_id").get("value");
+team_id = formValues.get("team_id");
 
 endpointUrl = BASEURL + "v2/teams/" + team_id + "/members";
 
 parameters = Map();
 parameters.put("email",email);
-
 parameters.put("role",role);
 
 res = invokeUrl [
@@ -31,8 +30,9 @@ res = invokeUrl [
     parameters: parameters
 ];
 
+if (res.get("status") != 200){
+    response.put("text","Error in request: " + res.get("status"));
+}
 
-
-
-response.put("text","Sent Invite");
+response.put("text","Sent Invite to User");
 return response;
