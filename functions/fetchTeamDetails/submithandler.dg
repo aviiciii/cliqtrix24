@@ -103,18 +103,21 @@ slidesList3 = Map();
 slidesList3.put("type","text");
 slidesList3.put("title","No of Projects:");
 buttonsList = list();
+
 buttonsList0 = Map();
 buttonsList0.put("label","View Projects");
 action = Map();
 action.put("type","invoke.function");
 data = Map();
-data.put("name","teamDetails");
+data.put("name","fetchProjects");
 action.put("data",data);
 buttonsList0.put("action",action);
 buttonsList.add(buttonsList0);
+
 slidesList3.put("buttons",buttonsList);
 slidesList3.put("data",count_projects);
 slidesList.add(slidesList3);
+
 slidesList4 = Map();
 slidesList4.put("type","text");
 slidesList4.put("title","Total Deployments");

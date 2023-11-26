@@ -6,8 +6,8 @@ userFirstName = user.get("first_name");
 userEmail = user.get("email");
 userid = user.get("id");
 response = Map();
-// Testing ------------------------------------
-if(message.containsIgnoreCase("teams"))
+// View Teams ------------------------------------
+if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("my teams") || message.containsIgnoreCase("all teams"))
 {
 	text = "Select a team";
 	// Get Teams
