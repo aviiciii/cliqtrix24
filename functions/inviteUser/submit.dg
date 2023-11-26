@@ -20,19 +20,30 @@ team_id = formValues.get("team_id");
 
 endpointUrl = BASEURL + "v2/teams/" + team_id + "/members";
 
-parameters = Map();
-parameters.put("email",email);
-parameters.put("role",role);
+
+headers.put("Content-Type","application/json");
+
+payload = Map();
+payload.put("email",email);
+payload.put("role",role);
+
+payload_text = toString(payload);
 
 res = invokeUrl [
     url: endpointUrl
     type: POST
-    parameters: parameters
+    parameters: payload_text
+    headers: headers
+
+
 ];
 
-if (res.get("status") != 200){
-    response.put("text","Error in request: " + res.get("status"));
+if (res.get("responseCode") == 200){
+    response.put("text","Sent Invite to User");
+    
+}
+else{
+    response.put("text","Error in request: " + res);
 }
 
-response.put("text","Sent Invite to User");
 return response;
