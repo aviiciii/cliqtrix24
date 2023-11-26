@@ -2,6 +2,9 @@
 BASEURL = "https://api.vercel.com/";
 ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
 
+headers = Map();
+headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+
 // row.put("View Details","[+:bug: Info](invoke.function|issues|scott.fisher@zylker.com|" + portalproject + "-" + bug.get("id") + ") ");
 
 if(target.get("teamId") != null){
@@ -17,38 +20,34 @@ if(target.get("teamId") != null){
     [
         url : endpointUrl
         type : GET
-        headers : [
-            "Authorization":"Bearer " + ACCESS_TOKEN
-        ]
+        headers : headers
+        connection:"vercel"
     ];
 
     // Get Team Details
     endpointUrl = BASEURL + "v2/teams/"+ ID +"/members";
 
     // Get Team Details
-    team_members = invokeurl
+    res = invokeurl
     [
         url : endpointUrl
         type : GET
-        headers : [
-            "Authorization":"Bearer " + ACCESS_TOKEN
-        ]
+        headers : headers
+        connection:"vercel"
     ];
 
     // count team members
-    team_members = team_members.toJSONList("members");
+    team_members = toJSONList(res.get("members"));
     team_members_count = team_members.size();
 
+    // check if team owner
     if_owner = false;
     if (team.get("membership").get("role") == "owner"){
         if_owner = true;
     }
 
     // 	Get Projects
-    endpointUrl = endpointUrl + "v9/projects?teamId=" + team_id;
-
-	headers = Map();
-	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+    endpointUrl = endpointUrl + "v9/projects?teamId=" + ID;
 	res = invokeurl
 	[
 		url :endpointUrl
@@ -56,14 +55,11 @@ if(target.get("teamId") != null){
 		headers:headers
 		connection:"vercel"
 	];
+    // count projects
 	projects = toJSONList(res.get("projects"));
-
     count_projects= projects.size();
 
-
-    endpointUrl = BASEURL + "v6/deployments?teamId=" + team_id;
-
-	
+    endpointUrl = BASEURL + "v6/deployments?teamId=" + ID;
 	res = invokeurl
 	[
 		url :endpointUrl
@@ -71,6 +67,7 @@ if(target.get("teamId") != null){
 		headers:headers
 		connection:"vercel"
 	];
+    // count deployments
 	deployments = toJSONList(res.get("deployments"));
     count_deployments = deployments.size();
 

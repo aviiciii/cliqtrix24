@@ -1,0 +1,117 @@
+
+// Constants
+BASEURL = "https://api.vercel.com/";
+ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
+
+info arguments;
+ID = arguments.get("key");
+headers = Map();
+headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+// Get Team Details
+endpointUrl = BASEURL + "v13/deployments/" + ID;
+// Get Team Details
+res = invokeUrl[
+	url: endpointUrl
+	type: GET
+	headers: headers
+	connection:"vercel"
+];
+
+target = "Production";
+if(res.get("target") == null)
+{
+	target = "Pull Request Preview";
+}
+
+
+name = res.get("name");
+status = res.get("status");
+time = res.get("ready");
+info time;
+ctime = toDateTime(time,"MM-d-yy");
+
+repo = "https://github.com/"+res.get("meta").get("githubOrg") + "/"+ res.get("meta").get("githubRepo");
+
+url = "https://"+res.get("url");
+
+commiter_login= res.get("meta").get("githubCommitAuthorLogin");
+commiter_name= res.get("meta").get("githubCommitAuthorName");
+
+response = Map();
+response.put("text","Details of your current deployments");
+bot = Map();
+bot.put("name","Vercel ");
+response.put("bot",bot);
+card = Map();
+card.put("title","Deployment Details:");
+card.put("theme","modern-inline");
+response.put("card",card);
+slidesList = list();
+slidesList0 = Map();
+slidesList0.put("type","text");
+slidesList0.put("title","Name:");
+slidesList0.put("data",name);
+slidesList.add(slidesList0);
+slidesList1 = Map();
+slidesList1.put("type","text");
+slidesList1.put("title","Type:");
+slidesList1.put("data",target);
+slidesList.add(slidesList1);
+slidesList2 = Map();
+slidesList2.put("type","text");
+slidesList2.put("title","Status:");
+slidesList2.put("data",status);
+slidesList.add(slidesList2);
+slidesList3 = Map();
+slidesList3.put("type","text");
+slidesList3.put("title","Time:");
+slidesList3.put("data",ctime);
+slidesList.add(slidesList3);
+slidesList4 = Map();
+slidesList4.put("type","text");
+slidesList4.put("title","Github Repo:");
+buttonsList = list();
+buttonsList0 = Map();
+buttonsList0.put("label","Open in Github");
+buttonsList0.put("type","+");
+action = Map();
+action.put("type","open.url");
+data = Map();
+data.put("web",repo);
+action.put("data",data);
+buttonsList0.put("action",action);
+buttonsList.add(buttonsList0);
+slidesList4.put("buttons",buttonsList);
+slidesList4.put("data","Click Below to open in Github");
+slidesList.add(slidesList4);
+slidesList5 = Map();
+slidesList5.put("type","text");
+slidesList5.put("title","Preview URL:");
+buttonsList = list();
+buttonsList0 = Map();
+buttonsList0.put("label","View Preview");
+buttonsList0.put("type","+");
+action = Map();
+action.put("type","open.url");
+data = Map();
+data.put("web",url);
+action.put("data",data);
+buttonsList0.put("action",action);
+buttonsList.add(buttonsList0);
+slidesList5.put("buttons",buttonsList);
+slidesList5.put("data","Click Below to open Preview url");
+slidesList.add(slidesList5);
+slidesList6 = Map();
+slidesList6.put("type","label");
+slidesList6.put("title","Title for your Label");
+dataList = list();
+dataList0 = Map();
+dataList0.put("Name",commiter_name);
+dataList.add(dataList0);
+dataList1 = Map();
+dataList1.put("Github Username",commiter_login);
+dataList.add(dataList1);
+slidesList6.put("data",dataList);
+slidesList.add(slidesList6);
+response.put("slides",slidesList);
+return response;
