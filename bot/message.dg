@@ -2,136 +2,294 @@
 // Constants
 BASEURL = "https://api.vercel.com/";
 ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
-// row.put("View Details","[+:bug: Info](invoke.function|issues|scott.fisher@zylker.com|" + portalproject + "-" + bug.get("id") + ") ");
-buttonid = arguments.get("key").toList("-");
-ID = buttonid.get(1);
-headers = Map();
-headers.put("Authorization","Bearer " + ACCESS_TOKEN);
-// Get Team Details
-endpointUrl = BASEURL + "v2/teams/" + ID;
-// Get Team Details
-team = invokeurl
-[
-	url :endpointUrl
-	type :GET
-	headers:headers
-];
-// Get Team Details
-endpointUrl = BASEURL + "v2/teams/" + ID + "/members";
-// Get Team Details
-team_members = invokeurl
-[
-	url :endpointUrl
-	type :GET
-	headers:headers
-];
-// count team members
-team_members = toJSONList(team_members.get("members"));
-team_members_count = team_members.size();
-if_owner = false;
-if(team.get("membership").get("role") == "owner")
-{
-	if_owner = true;
-}
-// 	Get Projects
-endpointUrl = endpointUrl + "v9/projects?teamId=" + ID;
-res = invokeurl
-[
-	url :endpointUrl
-	type :GET
-	headers:headers
-	connection:"vercel"
-];
-projects = toJSONList(res.get("projects"));
-count_projects = projects.size();
-endpointUrl = BASEURL + "v6/deployments?teamId=" + ID;
-res = invokeurl
-[
-	url :endpointUrl
-	type :GET
-	headers:headers
-	connection:"vercel"
-];
-deployments = toJSONList(res.get("deployments"));
-count_deployments = deployments.size();
-// Output Table
+userFirstName = user.get("first_name");
+userEmail = user.get("email");
+userid = user.get("id");
 response = Map();
-response.put("text","Team Details");
-bot = Map();
-bot.put("name","Vercel");
-response.put("bot",bot);
-card = Map();
-card.put("title","Quick Actions");
-card.put("theme","modern-inline");
-response.put("card",card);
-slidesList = list();
-slidesList0 = Map();
-slidesList0.put("type","text");
-slidesList0.put("title","Team:");
-slidesList0.put("data",team.get("name"));
-slidesList.add(slidesList0);
-slidesList1 = Map();
-slidesList1.put("type","text");
-slidesList1.put("title","ID");
-slidesList1.put("data",team.get("id"));
-slidesList.add(slidesList1);
-slidesList2 = Map();
-slidesList2.put("type","text");
-slidesList2.put("title","No. of Members:");
-buttonsList = list();
-buttonsList0 = Map();
-buttonsList0.put("label","View Members");
-action = Map();
-action.put("type","open.url");
-data = Map();
-data.put("web","https://cliq.zoho.com");
-action.put("data",data);
-buttonsList0.put("action",action);
-buttonsList.add(buttonsList0);
-slidesList2.put("buttons",buttonsList);
-slidesList2.put("data",team_members_count);
-slidesList.add(slidesList2);
-slidesList3 = Map();
-slidesList3.put("type","text");
-slidesList3.put("title","No of Projects:");
-buttonsList = list();
-buttonsList0 = Map();
-buttonsList0.put("label","View Projects");
-action = Map();
-action.put("type","open.url");
-data = Map();
-data.put("web","https://cliq.zoho.com");
-action.put("data",data);
-buttonsList0.put("action",action);
-buttonsList.add(buttonsList0);
-slidesList3.put("buttons",buttonsList);
-slidesList3.put("data",count_projects);
-slidesList.add(slidesList3);
-slidesList4 = Map();
-slidesList4.put("type","text");
-slidesList4.put("title","Total Deployments");
-buttonsList = list();
-buttonsList0 = Map();
-buttonsList0.put("label","View Deployments");
-action = Map();
-action.put("type","open.url");
-data = Map();
-data.put("web","https://cliq.zoho.com");
-action.put("data",data);
-buttonsList0.put("action",action);
-buttonsList.add(buttonsList0);
-buttonsList1 = Map();
-buttonsList1.put("label","Open in Vercel");
-buttonsList1.put("type","+");
-action = Map();
-action.put("type","open.url");
-data = Map();
-data.put("web","https://cliq.zoho.com");
-action.put("data",data);
-buttonsList1.put("action",action);
-buttonsList.add(buttonsList1);
-slidesList4.put("buttons",buttonsList);
-slidesList4.put("data",count_deployments);
-slidesList.add(slidesList4);
-response.put("slides",slidesList);
+// Testing ------------------------------------
+if(message.containsIgnoreCase("teams"))
+{
+	text = "Select a team";
+	// Get Teams
+	endpointUrl = BASEURL + "v2/teams";
+	headers = Map();
+	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+	res = invokeurl
+	[
+		url :endpointUrl
+		type :GET
+		headers:headers
+		connection:"vercel"
+	];
+	teams = toJSONList(res.get("teams"));
+	// Create buttons
+	info teams;
+	text = "[+Testing](invoke.function|teamDetails)";
+	response.put("text",text);
+}
+// Hello Handler -------------------------------------------------------
+else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
+{
+	text = "Hi! How you doin'? :wink:";
+	response.put("text",text);
+	response.put("suggestions",{"list":{{"text":"View Projects"},{"text":"List Deployments"}}});
+}
+// View Projects -------------------------------------------------------
+else if(message.containsIgnoreCase("View Projects"))
+{
+	text = "Glad to hear that! :smile:";
+	// query data
+	query_map = Map();
+	criteria_string = "userid==" + userid;
+	query_map.put("criteria",criteria_string);
+	response_map = zoho.cliq.getRecords("verceldb",query_map);
+	record_id = 0;
+	// get team id	
+	team_id = null;
+	if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size() > 0)
+	{
+		team_id = response_map.get("list").get(0).get("teamid");
+		if(team_id == "personal")
+		{
+			team_id = null;
+		}
+	}
+	// 	Get Projects
+	endpointUrl = BASEURL + "v9/projects";
+	if(team_id != null)
+	{
+		endpointUrl = endpointUrl + "?teamId=" + team_id;
+	}
+	headers = Map();
+	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+	res = invokeurl
+	[
+		url :endpointUrl
+		type :GET
+		headers:headers
+		connection:"vercel"
+	];
+	projects = toJSONList(res.get("projects"));
+	rows = Collection();
+	for each  project in projects
+	{
+		// check if project is deployed
+		if(project.get("targets").get("production").get("alias") == null)
+		{
+			// if deployed then add to deployed list
+			row = {"name":project.get("name"),"owner":project.get("link").get("org"),"id":project.get("id"),"repo":project.get("link").get("org") + "/" + project.get("link").get("repo"),"prod":"N/A","url":"https://vercel.com/" + project.get("link").get("org") + "/" + project.get("link").get("repo")};
+		}
+		// if deployed then add to deployed list
+		else
+		{
+			row = {"name":project.get("name"),"owner":project.get("link").get("org"),"id":project.get("id"),"repo":project.get("link").get("org") + "/" + project.get("link").get("repo"),"prod":project.get("targets").get("production").get("url"),"url":"https://vercel.com/" + project.get("link").get("org") + "/" + project.get("link").get("repo")};
+			rows.add(row);
+		}
+	}
+	// find if project is deployed
+	no_of_deployed = 0;
+	for each  row in rows
+	{
+		if(row.get("prod") != "N/A")
+		{
+			no_of_deployed = no_of_deployed + 1;
+		}
+	}
+	// TABLE
+	response = Map();
+	response.put("text","Hey, " + userFirstName + "!");
+	bot = Map();
+	bot.put("name","Vercel");
+	response.put("bot",bot);
+	card = Map();
+	card.put("title","Welcome to project section");
+	card.put("theme","modern-inline");
+	response.put("card",card);
+	buttonsList = list();
+	buttonsList0 = Map();
+	buttonsList0.put("label","Next Page");
+	action = Map();
+	action.put("type","open.url");
+	data = Map();
+	data.put("web","https://cliq.zoho.com");
+	action.put("data",data);
+	buttonsList0.put("action",action);
+	buttonsList.add(buttonsList0);
+	response.put("buttons",buttonsList);
+	slidesList = list();
+	slidesList0 = Map();
+	slidesList0.put("type","table");
+	slidesList0.put("title","Your Projects");
+	buttonsList = list();
+	buttonsList0 = Map();
+	buttonsList0.put("label","Open Vercel");
+	action = Map();
+	action.put("type","open.url");
+	data = Map();
+	data.put("web","https://vercel.com/dashboard");
+	action.put("data",data);
+	buttonsList0.put("action",action);
+	buttonsList.add(buttonsList0);
+	slidesList0.put("buttons",buttonsList);
+	data = Map();
+	headersList = list();
+	headersList.add("Project");
+	headersList.add("Owner");
+	headersList.add("Deployment URL");
+	headersList.add("Open Project");
+	data.put("headers",headersList);
+	rowsList = list();
+	for each  row in rows
+	{
+		rowsList0 = Map();
+		rowsList0.put("Project",row.get("name"));
+		rowsList0.put("Owner",row.get("owner"));
+		rowsList0.put("Deployment URL","https://" + row.get("prod"));
+		rowsList0.put("Open Project",row.get("url"));
+		rowsList.add(rowsList0);
+	}
+	data.put("rows",rowsList);
+	slidesList0.put("data",data);
+	slidesList.add(slidesList0);
+	slidesList1 = Map();
+	slidesList1.put("type","text");
+	slidesList1.put("title","Summary");
+	slidesList1.put("data","Deployed: " + no_of_deployed + "\nTotal: " + no_of_deployed + "\nOthers:");
+	slidesList.add(slidesList1);
+	response.put("slides",slidesList);
+	response.put("slides",slidesList);
+}
+// View Deployements ---------------------------------------------------
+else if(message.containsIgnoreCase("List Deployments"))
+{
+	text = "Glad to hear that! :smile:";
+	// 	Get Projects
+	// query data
+	query_map = Map();
+	criteria_string = "userid==" + userid;
+	query_map.put("criteria",criteria_string);
+	response_map = zoho.cliq.getRecords("verceldb",query_map);
+	record_id = 0;
+	// get team id	
+	team_id = null;
+	if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size() > 0)
+	{
+		team_id = response_map.get("list").get(0).get("teamid");
+		if(team_id == "personal")
+		{
+			team_id = null;
+		}
+	}
+	endpointUrl = BASEURL + "v6/deployments";
+	if(team_id != null)
+	{
+		endpointUrl = endpointUrl + "?teamId=" + team_id;
+	}
+	headers = Map();
+	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+	res = invokeurl
+	[
+		url :endpointUrl
+		type :GET
+		headers:headers
+		connection:"vercel"
+	];
+	deployments = toJSONList(res.get("deployments"));
+	rows = Collection();
+	for each  deployment in deployments
+	{
+		if(deployment.get("target") == null)
+		{
+			type = "PR Preview";
+		}
+		else
+		{
+			type = "Production";
+		}
+		// check if project is deployed
+		if(deployment.get("inspectorUrl") == null)
+		{
+			row = {"name":deployment.get("name"),"type":type,"inspect":"N/A","url":deployment.get("url"),"id":deployment.get("uid")};
+		}
+		// if deployed then add to deployed list
+		else
+		{
+			row = {"name":deployment.get("name"),"type":type,"inspect":deployment.get("inspectorUrl"),"url":deployment.get("url"),"id":deployment.get("uid")};
+		}
+		rows.add(row);
+	}
+	// TABLE
+	response = Map();
+	response.put("text","Hey, " + userFirstName + "!");
+	bot = Map();
+	bot.put("name","Vercel");
+	response.put("bot",bot);
+	card = Map();
+	card.put("title","Deployments");
+	card.put("theme","modern-inline");
+	response.put("card",card);
+	// create table
+	slidesList = list();
+	slidesList0 = Map();
+	slidesList0.put("type","table");
+	slidesList0.put("title","Your Deployments");
+	data = Map();
+	headersList = list();
+	headersList.add("Project");
+	headersList.add("Type");
+	headersList.add("Preview");
+	headersList.add("Details");
+	headersList.add("Testing");
+	data.put("headers",headersList);
+	rowsList = list();
+	for each  row in rows
+	{
+		rowsList0 = Map();
+		rowsList0.put("Project",row.get("name"));
+		rowsList0.put("Type",row.get("type"));
+		rowsList0.put("Preview","[View](https://" + row.get("url") + ")");
+		rowsList0.put("Details","[Know More](" + row.get("inspect") + ")");
+		temp = "[+Testing](invoke.function|getdeployment|" + userEmail + "|" + row.get("id") + ")";
+		info temp;
+		rowsList0.put("Testing",temp);
+		rowsList.add(rowsList0);
+	}
+	data.put("rows",rowsList);
+	slidesList0.put("data",data);
+	slidesList.add(slidesList0);
+	response.put("slides",slidesList);
+}
+// Change Teams---------------------------------------------------------
+else if(message.containsIgnoreCase("Change Team") || message.containsIgnoreCase("Change Teams") || message.containsIgnoreCase("Switch Team"))
+{
+	// Get Teams
+	endpointUrl = BASEURL + "v2/teams";
+	headers = Map();
+	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+	res = invokeurl
+	[
+		url :endpointUrl
+		type :GET
+		headers:headers
+		connection:"vercel"
+	];
+	teams = toJSONList(res.get("teams"));
+	options = list();
+	options.add({"label":"Personal","value":"personal"});
+	for each  team in teams
+	{
+		options.add({"label":team.get("name"),"value":team.get("id")});
+	}
+	inputs = list();
+	inputs.add({"type":"select","trigger_on_change":true,"name":"teamid","label":"Select Team","hint":"Choose from your teams","placeholder":"Personal","mandatory":true,"options":options});
+	form = {"type":"form","title":"Change Team","hint":"Select your Vercel Team.","name":"ID","version":1,"button_label":"Change","actions":{"submit":{"type":"invoke.function","name":"changeTeam"}},"inputs":inputs};
+	return form;
+}
+// Something Else ------------------------------------------------------
+else
+{
+	text = "Sorry, I didn't get that. :confused:";
+	response.put("text",text);
+	response.put("suggestions",{"list":{{"text":"View Projects"},{"text":"List Deployments"}}});
+}
 return response;
