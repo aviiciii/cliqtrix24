@@ -36,7 +36,7 @@ if(team.get("membership").get("role") == "owner")
 }
 // 	Get Projects
 endpointUrl = BASEURL + "v9/projects?teamId=" + ID;
-info endpointUrl;
+
 res = invokeurl
 [
 	url :endpointUrl
@@ -61,6 +61,10 @@ res = invokeurl
 
 deployments = toJSONList(res.get("deployments"));
 count_deployments = deployments.size();
+
+
+// open in vercel url
+open_in_vercel = "https://vercel.com/"+team.get("slug");
 
 // Output Table
 response = Map();
@@ -131,16 +135,18 @@ data.put("name","teamDetails");
 action.put("data",data);
 buttonsList0.put("action",action);
 buttonsList.add(buttonsList0);
+
 buttonsList1 = Map();
 buttonsList1.put("label","Open in Vercel");
 buttonsList1.put("type","+");
 action = Map();
 action.put("type","open.url");
 data = Map();
-data.put("web","https://cliq.zoho.com");
+data.put("web",open_in_vercel);
 action.put("data",data);
 buttonsList1.put("action",action);
 buttonsList.add(buttonsList1);
+
 slidesList4.put("buttons",buttonsList);
 slidesList4.put("data",count_deployments);
 slidesList.add(slidesList4);
