@@ -1,0 +1,27 @@
+// Constants
+BASEURL = "https://api.vercel.com/";
+ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
+headers = Map();
+headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+// seperate key with -
+keys = arguments.get("key").toList(",");
+team_id = keys.get(0);
+user_id = keys.get(1);
+
+// Get Team Details
+endpointUrl = BASEURL + "v1/teams/" + team_id + "/members/" + user_id;
+// Get Team Details
+res = invokeurl
+[
+	url :endpointUrl
+	type :DELETE
+	headers:headers
+	connection:"vercel"
+    detailed:true
+];
+if (res.get("responseCode") == 200) {
+    text = "Success: User removed from team";
+} else {
+    text = "Error in request: " + res;
+}
+return {"text": text};

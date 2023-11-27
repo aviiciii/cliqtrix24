@@ -99,11 +99,12 @@ for each member in members
     rowsList0.put("Email",member.get("email"));
     if(if_owner)
     {
-        rowsList0.put("Delete","Remove");
+        key = team_id+","+member.get("uid");
+        rowsList0.put("Delete","[-Remove User](invoke.function|removeUser|" + user.get("email") + "|" + key + ")");
     }
     else
     {
-        rowsList0.put("Delete","-");
+        rowsList0.put("Delete","N/A");
     }
     rowsList.add(rowsList0);
 }
