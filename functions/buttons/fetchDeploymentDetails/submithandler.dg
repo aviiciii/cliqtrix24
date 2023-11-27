@@ -37,7 +37,6 @@ commiter_login= res.get("meta").get("githubCommitAuthorLogin");
 commiter_name= res.get("meta").get("githubCommitAuthorName");
 
 response = Map();
-response.put("text","Details of your deployments");
 bot = Map();
 bot.put("name","Vercel ");
 response.put("bot",bot);
