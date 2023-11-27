@@ -2,6 +2,7 @@ userid = user.get("id");
 response = Map();
 formValues = form.get("values");
 teamid = formValues.get("teamid").get("value");
+teamname = formValues.get("teamid").get("label");
 // new values
 values_map = Map();
 values_map.put("userid",userid);
@@ -29,5 +30,5 @@ else
 	
 	info "added newly";
 }
-response.put("text","Team changed");
+response.put("text","Team changed to " + teamname);
 return response;
