@@ -116,7 +116,7 @@ if(selections.size() >0 ){
         slidesList1 = Map();
         slidesList1.put("type","text");
         slidesList1.put("title","Summary");
-        slidesList1.put("data","Deployed: " + no_of_deployed + "\nTotal: " + no_of_deployed + "\nOthers:");
+        slidesList1.put("data","Deployed: " + no_of_deployed + "\nTotal: " + no_of_deployed + "\n");
         slidesList.add(slidesList1);
         response.put("slides",slidesList);
         response.put("slides",slidesList);
