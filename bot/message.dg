@@ -141,7 +141,13 @@ else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
 {
 	text = "Hi! How you doin'? :wink:";
 	response.put("text",text);
-	response.put("suggestions",{"list":{{"text":"View Projects"},{"text":"List Deployments"}}});
+	response.put("suggestions",
+		{"list":{
+			{"text":"View Projects"},
+			{"text":"List Deployments"},
+			{"text":"My Teams"},
+			{"text":"Change Team"}
+		}});
 }
 // View Projects -------------------------------------------------------
 else if(message.containsIgnoreCase("View Projects"))
@@ -389,6 +395,12 @@ else
 {
 	text = "Sorry, I didn't get that. 🤔";
 	response.put("text",text);
-	response.put("suggestions",{"list":{{"text":"View Projects"},{"text":"List Deployments"}}});
+	response.put("suggestions",
+		{"list":{
+			{"text":"View Projects"},
+			{"text":"List Deployments"},
+			{"text":"My Teams"},
+			{"text":"Change Team"}
+		}});
 }
 return response;
