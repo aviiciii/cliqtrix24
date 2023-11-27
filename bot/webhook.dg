@@ -1,15 +1,67 @@
-if (body.get("type")=="deployment.succeeded"){
-    title = "🚀 Deployment succeeded!\n\n";
+
+if(body.get("type") == "deployment.succeeded")
+{
+	title = "🚀 Deployment succeeded!\n\n";
 }
-
+else
+{
+	temp = body.get("type").toList(".");
+	temp = temp.get(1);
+	title = "Deployment " + temp + "!\n\n";
+}
 payload = body.get("payload");
-
 repo = payload.get("deployment").get("meta").get("githubOrg") + payload.get("deployment").get("meta").get("githubRepoName");
 deployement_id = payload.get("deployment").get("id");
-
-commit_author= payload.get("deployment").get("meta").get("githubCommitAuthorName");
+commit_author = payload.get("deployment").get("meta").get("githubCommitAuthorName");
 commit_msg = payload.get("deployment").get("meta").get("githubCommitMessage");
 preview = payload.get("deployment").get("inspectorUrl");
+text = "Repo Name: " + repo + "\nCommit Author: " + commit_author + "\nCommit Message: " + commit_msg;
 
-
-info displayableMessage;
+response = Map();
+response.put("text","Repo Name: " + repo);
+bot = Map();
+bot.put("name","Vercel");
+response.put("bot",bot);
+card = Map();
+card.put("title",title);
+card.put("theme","modern-inline");
+response.put("card",card);
+slidesList = list();
+slidesList0 = Map();
+slidesList0.put("type","label");
+slidesList0.put("title","Deployed commit:");
+buttonsList = list();
+buttonsList0 = Map();
+buttonsList0.put("label","Open in Vercel");
+buttonsList0.put("type","+");
+action = Map();
+action.put("type","open.url");
+data = Map();
+data.put("web",preview);
+action.put("data",data);
+buttonsList0.put("action",action);
+buttonsList.add(buttonsList0);
+buttonsList1 = Map();
+buttonsList1.put("label","More Details");
+action = Map();
+action.put("type","invoke.function");
+data = Map();
+data.put("name","getdeployment");
+action.put("data",data);
+arguments = Map();
+arguments.put("key",deployement_id);
+buttonsList1.put("arguments",arguments);
+buttonsList1.put("action",action);
+buttonsList.add(buttonsList1);
+slidesList0.put("buttons",buttonsList);
+dataList = list();
+dataList0 = Map();
+dataList0.put("Commit Author:  ",commit_author);
+dataList.add(dataList0);
+dataList1 = Map();
+dataList1.put("Commit Message:",commit_msg);
+dataList.add(dataList1);
+slidesList0.put("data",dataList);
+slidesList.add(slidesList0);
+response.put("slides",slidesList);
+return response;
