@@ -9,6 +9,14 @@ response = Map();
 
 // Testing ----------------------------------------
 if (message.containsIgnoreCase("test")){
+	
+	text = "testing";
+	response.put("text",text);
+
+}
+
+// Invite Member ----------------------------------
+else if (message.containsIgnoreCase("invite member")){
 	team_id = "team_Db2XQGTUtAc8mAd56BvgkWGR";
 	return {
 "type": "form",
@@ -378,7 +386,7 @@ else if(message.containsIgnoreCase("Change Team") || message.containsIgnoreCase(
 // Something Else ------------------------------------------------------
 else
 {
-	text = "Sorry, I didn't get that. :confused:";
+	text = "Sorry, I didn't get that. 🤔";
 	response.put("text",text);
 	response.put("suggestions",{"list":{{"text":"View Projects"},{"text":"List Deployments"}}});
 }
