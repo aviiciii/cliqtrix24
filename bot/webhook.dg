@@ -1,0 +1,15 @@
+if (body.get("type")=="deployment.succeeded"){
+    title = "🚀 Deployment succeeded!\n\n";
+}
+
+payload = body.get("payload");
+
+repo = payload.get("deployment").get("meta").get("githubOrg") + payload.get("deployment").get("meta").get("githubRepoName");
+deployement_id = payload.get("deployment").get("id");
+
+commit_author= payload.get("deployment").get("meta").get("githubCommitAuthorName");
+commit_msg = payload.get("deployment").get("meta").get("githubCommitMessage");
+preview = payload.get("deployment").get("inspectorUrl");
+
+
+info displayableMessage;
