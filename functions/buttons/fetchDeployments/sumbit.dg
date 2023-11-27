@@ -64,7 +64,7 @@ deployments = toJSONList(res.get("deployments"));
 	slidesList = list();
 	slidesList0 = Map();
 	slidesList0.put("type","table");
-	slidesList0.put("title","Your Deployments");
+	slidesList0.put("title","Your Deployments:");
 	data = Map();
 	headersList = list();
 	headersList.add("Project");

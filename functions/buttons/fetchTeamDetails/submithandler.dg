@@ -83,7 +83,7 @@ slidesList0.put("data",team.get("name"));
 slidesList.add(slidesList0);
 slidesList1 = Map();
 slidesList1.put("type","text");
-slidesList1.put("title","ID");
+slidesList1.put("title","ID:");
 slidesList1.put("data",team.get("id"));
 slidesList.add(slidesList1);
 slidesList2 = Map();
@@ -129,7 +129,7 @@ slidesList.add(slidesList3);
 
 slidesList4 = Map();
 slidesList4.put("type","text");
-slidesList4.put("title","Total Deployments");
+slidesList4.put("title","Total Deployments:");
 buttonsList = list();
 buttonsList0 = Map();
 buttonsList0.put("label","View Deployments");
