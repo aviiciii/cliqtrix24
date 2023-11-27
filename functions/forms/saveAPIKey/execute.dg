@@ -1,0 +1,35 @@
+userid = user.get("id");
+response = Map();
+formValues = form.get("values");
+apikey = formValues.get("apikey").get("value");
+
+// new values
+values_map = Map();
+values_map.put("userid",userid);
+values_map.put("apikey",apikey);
+
+// query data
+query_map = Map();
+criteria_string = "userid==" + userid;
+query_map.put("criteria",criteria_string);
+response_map = zoho.cliq.getRecords("verceldb",query_map);
+
+record_id = 0;
+if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size() > 0)
+{
+	record_id = response_map.get("list").get(0).get("id");
+	if(record_id.length() > 0)
+	{
+		response_map = zoho.cliq.updateRecord("verceldb",record_id,values_map);
+		info "updated";
+	}
+}
+else
+{
+	// if no record
+	response_map = zoho.cliq.createRecord("verceldb",values_map);
+	
+	info "added newly";
+}
+response.put("text","Updated API Key");
+return response;

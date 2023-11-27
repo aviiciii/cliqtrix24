@@ -1,0 +1,24 @@
+form = {
+"type": "form",
+"title": "Vercel API Key",
+"name": "apikey",
+"hint": "Add your API Key from Vercel to use this extension",
+"button_label": "Submit",
+"inputs": [
+{
+"name": "apikey",
+"label": "API Key",
+"placeholder": "Enter your Vercel API Key here",
+"min_length": "0",
+"max_length": "36",
+"mandatory": true,
+"type": "text"
+}
+],
+"action": {
+"type": "invoke.function",
+"name": "saveApiKey"
+}
+}
+
+return form;
