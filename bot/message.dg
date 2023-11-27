@@ -346,10 +346,10 @@ else if(message.containsIgnoreCase("List Deployments"))
 		rowsList0.put("Project",row.get("name"));
 		rowsList0.put("Type",row.get("type"));
 		rowsList0.put("Preview","[View](https://" + row.get("url") + ")");
-		rowsList0.put("Details","[Know More](" + row.get("inspect") + ")");
-		temp = "[+Testing](invoke.function|getdeployment|" + userEmail + "|" + row.get("id") + ")";
-		info temp;
-		rowsList0.put("Testing",temp);
+		temp = "[+Show](invoke.function|getdeployment|" + userEmail + "|" + row.get("id") + ")";
+		rowsList0.put("Details",temp);
+		
+		rowsList0.put("Testing","[Open](" + row.get("inspect") + ")");
 		rowsList.add(rowsList0);
 	}
 	data.put("rows",rowsList);
