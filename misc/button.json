@@ -1,9 +1,0 @@
-"buttons":{"label":"All Open Issues",
-"type":"+",
-"action":
-    {"type":"invoke.function",
-        "data":
-            {"name":"issues","owner":"GIVE YOUR EMAIL ID"
-    }},
-    "arguments":
-    {"key":portalproject}
