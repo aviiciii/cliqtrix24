@@ -1,11 +1,31 @@
-
+// --------XX DEFAULT CODE XX--------
 // Constants
 BASEURL = "https://api.vercel.com/";
-ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
+userFirstName = user.get("first_name");
+userEmail = user.get("email");
+userid = user.get("id");
+response = Map();
+
+// Get API KEY
+query_map = Map();
+query_map.put("criteria","userid==" + userid);
+response_map = zoho.cliq.getRecords("verceldb",query_map);
+if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size() > 0)
+{
+	ACCESS_TOKEN = response_map.get("list").get(0).get("apikey");
+	headers = Map();
+	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+}
+else{
+	response.put("text", "Please add your API Key first. Use the command `saveapi` to add your API Key.");
+	return response;
+}
+// --------XX DEFAULT CODE XX--------
+// Constants
+
 
 ID = arguments.get("key");
-headers = Map();
-headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+
 // Get Team Details
 endpointUrl = BASEURL + "v13/deployments/" + ID;
 // Get Team Details
@@ -13,7 +33,7 @@ res = invokeUrl[
 	url: endpointUrl
 	type: GET
 	headers: headers
-	connection:"vercel"
+
 ];
 
 target = "Production";
