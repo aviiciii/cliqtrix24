@@ -125,7 +125,7 @@ else if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("
 		url :endpointUrl
 		type :GET
 		headers:headers
-		connection:"vercel"
+
 	];
 	teams = toJSONList(res.get("teams"));
 	// Create buttons
@@ -208,7 +208,7 @@ else if(message.containsIgnoreCase("View Projects"))
 		url :endpointUrl
 		type :GET
 		headers:headers
-		connection:"vercel"
+
 	];
 	projects = toJSONList(res.get("projects"));
 	rows = Collection();
@@ -321,7 +321,7 @@ else if(message.containsIgnoreCase("List Deployments"))
 		url :endpointUrl
 		type :GET
 		headers:headers
-		connection:"vercel"
+
 	];
 	deployments = toJSONList(res.get("deployments"));
 	rows = Collection();
@@ -398,7 +398,7 @@ else if(message.containsIgnoreCase("Change Team") || message.containsIgnoreCase(
 		url :endpointUrl
 		type :GET
 		headers:headers
-		connection:"vercel"
+
 	];
 	teams = toJSONList(res.get("teams"));
 	options = list();
