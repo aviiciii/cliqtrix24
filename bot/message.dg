@@ -7,13 +7,26 @@ userEmail = user.get("email");
 userid = user.get("id");
 response = Map();
 
-// Testing ----------------------------------------
-if (message.containsIgnoreCase("test")){
-	
-	text = "testing";
-	response.put("text",text);
 
+// Testing ----------------------------------------
+if (message.containsIgnoreCase("getapi")){
+	query_map = Map();
+	criteria_string = "userid==" + userid;
+	query_map.put("criteria",criteria_string);
+	response_map = zoho.cliq.getRecords("verceldb",query_map);
+	if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("list").size() > 0)
+	{
+		apikey = response_map.get("list").get(0).get("apikey");
+		response.put("text", apikey);
+	}
 }
+// Save API ---------------------------------------
+else if(message.containsIgnoreCase("saveapi"))
+{
+	form = {"type":"form","title":"Vercel API Key","name":"apikey","hint":"Add your API Key from Vercel to use this extension","button_label":"Submit","inputs":{{"name":"apikey","label":"API Key","placeholder":"Enter your Vercel API Key here","min_length":"0","max_length":"36","mandatory":true,"type":"text"}},"action":{"type":"invoke.function","name":"saveApiKey"}};
+	return form;
+}
+
 
 // Invite Member ----------------------------------
 else if (message.containsIgnoreCase("invite member")){
