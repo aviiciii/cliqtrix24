@@ -10,7 +10,7 @@ else
 	title = "Deployment " + temp + "!\n\n";
 }
 payload = body.get("payload");
-repo = payload.get("deployment").get("meta").get("githubOrg") + payload.get("deployment").get("meta").get("githubRepoName");
+repo = payload.get("deployment").get("meta").get("githubOrg") + "/"+ payload.get("deployment").get("meta").get("githubRepo");
 deployement_id = payload.get("deployment").get("id");
 commit_author = payload.get("deployment").get("meta").get("githubCommitAuthorName");
 commit_msg = payload.get("deployment").get("meta").get("githubCommitMessage");
