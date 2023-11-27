@@ -233,8 +233,8 @@ else if(message.containsIgnoreCase("View Projects"))
 	headersList = list();
 	headersList.add("Project");
 	headersList.add("Owner");
-	headersList.add("Deployment URL");
-	headersList.add("Open Project");
+	headersList.add("Deployment");
+	headersList.add("Vercel");
 	data.put("headers",headersList);
 	rowsList = list();
 	for each  row in rows
@@ -242,8 +242,9 @@ else if(message.containsIgnoreCase("View Projects"))
 		rowsList0 = Map();
 		rowsList0.put("Project",row.get("name"));
 		rowsList0.put("Owner",row.get("owner"));
-		rowsList0.put("Deployment URL","https://" + row.get("prod"));
-		rowsList0.put("Open Project",row.get("url"));
+
+		rowsList0.put("Deployment","[View](" + "https://" + row.get("prod") + ")");
+		rowsList0.put("Vercel","[Open]("+row.get("url")+ ")");
 		rowsList.add(rowsList0);
 	}
 	data.put("rows",rowsList);
