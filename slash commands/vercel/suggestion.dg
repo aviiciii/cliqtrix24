@@ -10,4 +10,8 @@ entry1.put("title","Deployments");
 entry1.put("description","Check out the various deployments of your projects.");
 entry1.put("imageurl","https://i.pinimg.com/originals/67/b2/a9/67b2a9ba5e85822f237caae92111e938.gif");
 list.add(entry1);
+entry2 = Map();
+entry2.put("title","Teams");
+entry2.put("description","View your Teams.");
+entry2.put("imageurl","https://i.pinimg.com/originals/5b/cf/51/5bcf5109367e1e5420a83e56330b9333.gif");
 return list;

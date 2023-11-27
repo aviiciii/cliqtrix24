@@ -19,68 +19,68 @@ if (message.containsIgnoreCase("test")){
 else if (message.containsIgnoreCase("invite member")){
 	team_id = "team_Db2XQGTUtAc8mAd56BvgkWGR";
 	return {
-"type": "form",
-"title": "Invite User",
-"name": "team-invite",
-"hint": "Invite a User to your Vercel Team",
-"button_label": "Add",
-"inputs": [
-    {
-"name": "team_id",
-"value": team_id,
-"type": "hidden"
-},
-{
-"name": "email",
-"label": "Email",
-"placeholder": "user@example.com",
-"min_length": "0",
-"max_length": "25",
-"mandatory": true,
-"type": "text",
-"format": "email"
-},
-{
-"name": "role",
-"label": "Select Role",
-"placeholder": "Choose from the list of options",
-"max_selections": "1",
-"multiple": false,
-"mandatory": true,
-"type": "dynamic_select",
-"options": [
-{
-"value": "OWNER",
-"label": "Team Owner"
-},
-{
-"value": "MEMBER",
-"label": "Team Member"
-},
-{
-"value": "VIEWER",
-"label": "Viewer"
-},
-{
-"value": "DEVELOPER",
-"label": "Project Developer"
-},
-{
-"value": "BILLING",
-"label": "Billing Manager"
-},
-{
-"value": "CONTRIBUTOR",
-"label": "Contributor"
-}
-]
-}
-],
-"action": {
-"type": "invoke.function",
-"name": "inviteUser"
-}
-};
+		"type": "form",
+		"title": "Invite User",
+		"name": "team-invite",
+		"hint": "Invite a User to your Vercel Team",
+		"button_label": "Add",
+		"inputs": [
+			{
+		"name": "team_id",
+		"value": team_id,
+		"type": "hidden"
+		},
+		{
+		"name": "email",
+		"label": "Email",
+		"placeholder": "user@example.com",
+		"min_length": "0",
+		"max_length": "25",
+		"mandatory": true,
+		"type": "text",
+		"format": "email"
+		},
+		{
+		"name": "role",
+		"label": "Select Role",
+		"placeholder": "Choose from the list of options",
+		"max_selections": "1",
+		"multiple": false,
+		"mandatory": true,
+		"type": "dynamic_select",
+		"options": [
+		{
+		"value": "OWNER",
+		"label": "Team Owner"
+		},
+		{
+		"value": "MEMBER",
+		"label": "Team Member"
+		},
+		{
+		"value": "VIEWER",
+		"label": "Viewer"
+		},
+		{
+		"value": "DEVELOPER",
+		"label": "Project Developer"
+		},
+		{
+		"value": "BILLING",
+		"label": "Billing Manager"
+		},
+		{
+		"value": "CONTRIBUTOR",
+		"label": "Contributor"
+		}
+		]
+		}
+		],
+		"action": {
+		"type": "invoke.function",
+		"name": "inviteUser"
+		}
+	};
 
 }
 
@@ -152,7 +152,7 @@ else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
 // View Projects -------------------------------------------------------
 else if(message.containsIgnoreCase("View Projects"))
 {
-	text = "Glad to hear that! :smile:";
+	
 	// query data
 	query_map = Map();
 	criteria_string = "userid==" + userid;
