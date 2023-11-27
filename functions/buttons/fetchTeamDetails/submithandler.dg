@@ -68,12 +68,11 @@ open_in_vercel = "https://vercel.com/"+team.get("slug");
 
 // Output Table
 response = Map();
-response.put("text","Team Details");
 bot = Map();
 bot.put("name","Vercel");
 response.put("bot",bot);
 card = Map();
-card.put("title","Quick Actions");
+card.put("title","Team Details");
 card.put("theme","modern-inline");
 response.put("card",card);
 slidesList = list();
