@@ -30,7 +30,7 @@ team_members = toJSONList(res.get("members"));
 team_members_count = team_members.size();
 // check if team owner
 if_owner = false;
-if(team.get("membership").get("role") == "owner")
+if(team.get("membership").get("role") == "OWNER")
 {
 	if_owner = true;
 }
@@ -96,8 +96,11 @@ buttonsList0.put("label","View Members");
 action = Map();
 action.put("type","invoke.function");
 data = Map();
-data.put("name","teamDetails");
+data.put("name","fetchTeamMembers");
 action.put("data",data);
+arguments=Map();
+arguments.put("key", ID);
+buttonsList0.put("arguments",arguments);
 buttonsList0.put("action",action);
 buttonsList.add(buttonsList0);
 slidesList2.put("buttons",buttonsList);

@@ -1,0 +1,114 @@
+// Constants
+BASEURL = "https://api.vercel.com/";
+ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
+headers = Map();
+headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+team_id = arguments.get("key");
+
+// Get Team Details
+endpointUrl = BASEURL + "v2/teams/" + team_id;
+team = invokeurl
+[
+    url :endpointUrl
+    type :GET
+    headers:headers
+    connection:"vercel"
+];
+
+// check if team owner
+if_owner = false;
+if(team.get("membership").get("role") == "OWNER")
+{
+	if_owner = true;
+}
+
+team_name = team.get("name");
+team_role = team.get("membership").get("role");
+team_url = "https://vercel.com/"+team.get("slug");
+
+// Get Team Members
+endpointUrl = BASEURL + "v2/teams/" + team_id + "/members";
+res = invokeurl
+[
+	url :endpointUrl
+	type :GET
+	headers:headers
+	connection:"vercel"
+];
+members = toJSONList(res.get("members"));
+
+
+response = Map();
+response.put("text","Team Name: " + team_name + "\nYour Role: " + team_role);
+bot = Map();
+bot.put("name","Vercel");
+response.put("bot",bot);
+card = Map();
+card.put("title","Member Details:");
+card.put("theme","modern-inline");
+response.put("card",card);
+slidesList = list();
+slidesList0 = Map();
+slidesList0.put("type","table");
+slidesList0.put("title","Present Members:");
+buttonsList = list();
+if (if_owner)
+{
+buttonsList0 = Map();
+buttonsList0.put("label","Invite User");
+buttonsList0.put("type","+");
+action = Map();
+action.put("type","open.url");
+data = Map();
+data.put("web","https://cliq.zoho.com");
+action.put("data",data);
+buttonsList0.put("action",action);
+buttonsList.add(buttonsList0);
+}
+buttonsList1 = Map();
+buttonsList1.put("label","Open in Vercel");
+action = Map();
+action.put("type","open.url");
+data = Map();
+data.put("web",team_url);
+action.put("data",data);
+buttonsList1.put("action",action);
+buttonsList.add(buttonsList1);
+slidesList0.put("buttons",buttonsList);
+data = Map();
+headersList = list();
+headersList.add("Username");
+headersList.add("Role");
+headersList.add("Email");
+headersList.add("Delete");
+data.put("headers",headersList);
+rowsList = list();
+
+for each member in members
+{
+    if (member.get("confirmed") == "false")
+    {
+        continue;
+    }
+    rowsList0 = Map();
+    rowsList0.put("Username",member.get("username"));
+    rowsList0.put("Role",member.get("role"));
+    rowsList0.put("Email",member.get("email"));
+    if(if_owner)
+    {
+        rowsList0.put("Delete","Remove");
+    }
+    else
+    {
+        rowsList0.put("Delete","-");
+    }
+    rowsList.add(rowsList0);
+}
+
+
+
+data.put("rows",rowsList);
+slidesList0.put("data",data);
+slidesList.add(slidesList0);
+response.put("slides",slidesList);
+return response;
