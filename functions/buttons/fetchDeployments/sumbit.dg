@@ -2,6 +2,7 @@
 BASEURL = "https://api.vercel.com/";
 ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
 userFirstName = user.get("first_name");
+userEmail = user.get("email");
 response = Map();
 
 team_id = arguments.get("key");
@@ -26,71 +27,67 @@ res = invokeurl
 	connection:"vercel"
 ];
 deployments = toJSONList(res.get("deployments"));
-rows = Collection();
-for each  deployment in deployments
-{
-	// check if project is deployed
-	if(deployment.get("inspectorUrl") == null)
+	rows = Collection();
+	for each  deployment in deployments
 	{
 		if(deployment.get("target") == null)
 		{
-			type = "Preview";
+			type = "PR Preview";
 		}
 		else
 		{
-			type = deployment.get("target");
+			type = "Production";
 		}
-		row = {"name":deployment.get("name"),"type":type,"inspect":"N/A","url":deployment.get("url")};
+		// check if project is deployed
+		if(deployment.get("inspectorUrl") == null)
+		{
+			row = {"name":deployment.get("name"),"type":type,"inspect":"N/A","url":deployment.get("url"),"id":deployment.get("uid")};
+		}
+		// if deployed then add to deployed list
+		else
+		{
+			row = {"name":deployment.get("name"),"type":type,"inspect":deployment.get("inspectorUrl"),"url":deployment.get("url"),"id":deployment.get("uid")};
+		}
+		rows.add(row);
 	}
-	// if deployed then add to deployed list
-	else
+	// TABLE
+	response = Map();
+	response.put("text","Hey, " + userFirstName + "!");
+	bot = Map();
+	bot.put("name","Vercel");
+	response.put("bot",bot);
+	card = Map();
+	card.put("title","Deployments");
+	card.put("theme","modern-inline");
+	response.put("card",card);
+	// create table
+	slidesList = list();
+	slidesList0 = Map();
+	slidesList0.put("type","table");
+	slidesList0.put("title","Your Deployments");
+	data = Map();
+	headersList = list();
+	headersList.add("Project");
+	headersList.add("Type");
+	headersList.add("Preview");
+	headersList.add("Details");
+	headersList.add("Vercel");
+	data.put("headers",headersList);
+	rowsList = list();
+	for each  row in rows
 	{
-		if(deployment.get("target") == null)
-		{
-			type = "Preview";
-		}
-		else
-		{
-			type = deployment.get("target");
-		}
-		row = {"name":deployment.get("name"),"type":type,"inspect":deployment.get("inspectorUrl"),"url":deployment.get("url")};
+		rowsList0 = Map();
+		rowsList0.put("Project",row.get("name"));
+		rowsList0.put("Type",row.get("type"));
+		rowsList0.put("Preview","[View](https://" + row.get("url") + ")");
+		temp = "[+Show](invoke.function|getdeployment|" + userEmail + "|" + row.get("id") + ")";
+		rowsList0.put("Details",temp);
+		
+		rowsList0.put("Vercel","[Open](" + row.get("inspect") + ")");
+		rowsList.add(rowsList0);
 	}
-	rows.add(row);
-}
-// TABLE
-response = Map();
-response.put("text","Hey, " + userFirstName + "!");
-bot = Map();
-bot.put("name","Vercel");
-response.put("bot",bot);
-card = Map();
-card.put("title","Deployments");
-card.put("theme","modern-inline");
-response.put("card",card);
-// create table
-slidesList = list();
-slidesList0 = Map();
-slidesList0.put("type","table");
-slidesList0.put("title","Your Deployments");
-data = Map();
-headersList = list();
-headersList.add("Project");
-headersList.add("Type");
-headersList.add("Inspect");
-headersList.add("Open");
-data.put("headers",headersList);
-rowsList = list();
-for each  row in rows
-{
-	rowsList0 = Map();
-	rowsList0.put("Project",row.get("name"));
-	rowsList0.put("Type",row.get("type"));
-	rowsList0.put("Inspect",row.get("inspect"));
-	// 	rowsList0.put("Open","https://" + row.get("url"));
-	rowsList.add(rowsList0);
-}
-data.put("rows",rowsList);
-slidesList0.put("data",data);
-slidesList.add(slidesList0);
-response.put("slides",slidesList);
-return response;
+	data.put("rows",rowsList);
+	slidesList0.put("data",data);
+	slidesList.add(slidesList0);
+	response.put("slides",slidesList);
+	return response;
