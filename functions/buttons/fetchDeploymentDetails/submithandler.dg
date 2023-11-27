@@ -2,43 +2,36 @@
 // Constants
 BASEURL = "https://api.vercel.com/";
 ACCESS_TOKEN = "q7nuSNElNmNbpNE5mOjaq9Da";
-
 ID = arguments.get("key");
 headers = Map();
 headers.put("Authorization","Bearer " + ACCESS_TOKEN);
 // Get Team Details
 endpointUrl = BASEURL + "v13/deployments/" + ID;
 // Get Team Details
-res = invokeUrl[
-	url: endpointUrl
-	type: GET
-	headers: headers
+res = invokeurl
+[
+	url :endpointUrl
+	type :GET
+	headers:headers
 	connection:"vercel"
 ];
-
 target = "Production";
 if(res.get("target") == null)
 {
 	target = "Pull Request Preview";
 }
-
-
 name = res.get("name");
 status = res.get("status");
 time = res.get("ready");
-
 ctime = toDateTime(time,"MM-d-yy");
-
-repo = "https://github.com/"+res.get("meta").get("githubOrg") + "/"+ res.get("meta").get("githubRepo");
-
-url = "https://"+res.get("url");
-
-commiter_login= res.get("meta").get("githubCommitAuthorLogin");
-commiter_name= res.get("meta").get("githubCommitAuthorName");
-
+repo = "https://github.com/" + res.get("meta").get("githubOrg") + "/" + res.get("meta").get("githubRepo");
+url = "https://" + res.get("url");
+commiter_login = res.get("meta").get("githubCommitAuthorLogin");
+commiter_name = res.get("meta").get("githubCommitAuthorName");
 response = Map();
+response.put("text","Details of your deployments");
 bot = Map();
-bot.put("name","Vercel ");
+bot.put("name","Vercel");
 response.put("bot",bot);
 card = Map();
 card.put("title","Deployment Details:");
@@ -47,15 +40,18 @@ response.put("card",card);
 slidesList = list();
 slidesList0 = Map();
 slidesList0.put("type","text");
-slidesList0.put("title","Name:" + name);
+slidesList0.put("title","Name:");
+slidesList0.put("data",name);
 slidesList.add(slidesList0);
 slidesList1 = Map();
 slidesList1.put("type","text");
-slidesList1.put("title","Type:" + target);
+slidesList1.put("title","Type:");
+slidesList1.put("data",target);
 slidesList.add(slidesList1);
 slidesList2 = Map();
 slidesList2.put("type","text");
-slidesList2.put("title","Status:" + status);
+slidesList2.put("title","Status:");
+slidesList2.put("data",status);
 slidesList.add(slidesList2);
 slidesList3 = Map();
 slidesList3.put("type","text");
