@@ -58,11 +58,14 @@ buttonsList0 = Map();
 buttonsList0.put("label","Invite User");
 buttonsList0.put("type","+");
 action = Map();
-action.put("type","open.url");
+action.put("type","invoke.function");
 data = Map();
-data.put("web","https://cliq.zoho.com");
+data.put("name","connectorInviteUser");
 action.put("data",data);
 buttonsList0.put("action",action);
+arguments=Map();
+arguments.put("key", team_id);
+buttonsList0.put("arguments",arguments);
 buttonsList.add(buttonsList0);
 }
 buttonsList1 = Map();
