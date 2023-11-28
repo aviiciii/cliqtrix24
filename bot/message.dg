@@ -17,8 +17,8 @@ if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("l
 	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
 }
 else{
-	response.put("text", "Please add your API Key first. Use the command `saveapi` to add your API Key.");
-	return response;
+	form = {"type":"form","title":"Vercel API Key","name":"apikey","hint":"Add your API Key from Vercel to use this extension","button_label":"Submit","inputs":{{"name":"apikey","label":"API Key","placeholder":"Enter your Vercel API Key here","min_length":"0","max_length":"36","mandatory":true,"type":"text"}},"action":{"type":"invoke.function","name":"saveApiKey"}};
+	return form;
 }
 // --------XX DEFAULT CODE XX--------
 
