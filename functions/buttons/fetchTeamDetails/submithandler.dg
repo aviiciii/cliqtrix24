@@ -1,3 +1,4 @@
+
 // --------XX DEFAULT CODE XX--------
 // Constants
 BASEURL = "https://api.vercel.com/";
@@ -5,7 +6,6 @@ userFirstName = user.get("first_name");
 userEmail = user.get("email");
 userid = user.get("id");
 response = Map();
-
 // Get API KEY
 query_map = Map();
 query_map.put("criteria","userid==" + userid);
@@ -16,13 +16,12 @@ if(response_map.get("status").equalsIgnoreCase("SUCCESS") && response_map.get("l
 	headers = Map();
 	headers.put("Authorization","Bearer " + ACCESS_TOKEN);
 }
-else{
-	response.put("text", "Please add your API Key first. Use the command `saveapi` to add your API Key.");
+else
+{
+	response.put("text","Please add your API Key first. Use the command `saveapi` to add your API Key.");
 	return response;
 }
 // --------XX DEFAULT CODE XX--------
-
-
 ID = arguments.get("key");
 // Get Team Details
 endpointUrl = BASEURL + "v2/teams/" + ID;
@@ -53,7 +52,6 @@ if(team.get("membership").get("role") == "OWNER")
 }
 // 	Get Projects
 endpointUrl = BASEURL + "v9/projects?teamId=" + ID;
-
 res = invokeurl
 [
 	url :endpointUrl
@@ -63,8 +61,6 @@ res = invokeurl
 // count projects
 projects = toJSONList(res.get("projects"));
 count_projects = projects.size();
-
-
 endpointUrl = BASEURL + "v6/deployments?teamId=" + ID;
 res = invokeurl
 [
@@ -73,16 +69,13 @@ res = invokeurl
 	headers:headers
 ];
 // count deployments
-
 deployments = toJSONList(res.get("deployments"));
 count_deployments = deployments.size();
-
-
 // open in vercel url
-open_in_vercel = "https://vercel.com/"+team.get("slug");
-
+open_in_vercel = "https://vercel.com/" + team.get("slug");
 // Output Table
 response = Map();
+response.put("text","A short summary of your team!");
 bot = Map();
 bot.put("name","Vercel");
 response.put("bot",bot);
@@ -98,7 +91,7 @@ slidesList0.put("data",team.get("name"));
 slidesList.add(slidesList0);
 slidesList1 = Map();
 slidesList1.put("type","text");
-slidesList1.put("title","ID:");
+slidesList1.put("title","Unique ID:");
 slidesList1.put("data",team.get("id"));
 slidesList.add(slidesList1);
 slidesList2 = Map();
@@ -112,8 +105,8 @@ action.put("type","invoke.function");
 data = Map();
 data.put("name","fetchTeamMembers");
 action.put("data",data);
-arguments=Map();
-arguments.put("key", ID);
+arguments = Map();
+arguments.put("key",ID);
 buttonsList0.put("arguments",arguments);
 buttonsList0.put("action",action);
 buttonsList.add(buttonsList0);
@@ -124,7 +117,6 @@ slidesList3 = Map();
 slidesList3.put("type","text");
 slidesList3.put("title","No of Projects:");
 buttonsList = list();
-
 buttonsList0 = Map();
 buttonsList0.put("label","View Projects");
 action = Map();
@@ -132,16 +124,14 @@ action.put("type","invoke.function");
 data = Map();
 data.put("name","fetchProjects");
 action.put("data",data);
-arguments=Map();
-arguments.put("key", ID);
+arguments = Map();
+arguments.put("key",ID);
 buttonsList0.put("arguments",arguments);
 buttonsList0.put("action",action);
 buttonsList.add(buttonsList0);
-
 slidesList3.put("buttons",buttonsList);
 slidesList3.put("data",count_projects);
 slidesList.add(slidesList3);
-
 slidesList4 = Map();
 slidesList4.put("type","text");
 slidesList4.put("title","Total Deployments:");
@@ -153,13 +143,11 @@ action.put("type","invoke.function");
 data = Map();
 data.put("name","getdeployments");
 action.put("data",data);
-arguments=Map();
-arguments.put("key", ID);
+arguments = Map();
+arguments.put("key",ID);
 buttonsList0.put("arguments",arguments);
 buttonsList0.put("action",action);
-
 buttonsList.add(buttonsList0);
-
 buttonsList1 = Map();
 buttonsList1.put("label","Open in Vercel");
 buttonsList1.put("type","+");
@@ -170,7 +158,6 @@ data.put("web",open_in_vercel);
 action.put("data",data);
 buttonsList1.put("action",action);
 buttonsList.add(buttonsList1);
-
 slidesList4.put("buttons",buttonsList);
 slidesList4.put("data",count_deployments);
 slidesList.add(slidesList4);
