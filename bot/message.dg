@@ -24,7 +24,7 @@ else{
 
 
 // Testing ----------------------------------------
-if (message.containsIgnoreCase("getapi")){
+if (message.containsIgnoreCase("getapikey") || message.containsIgnoreCase("Get Api key") || message.containsIgnoreCase("Show API key")){
 	query_map = Map();
 	criteria_string = "userid==" + userid;
 	query_map.put("criteria",criteria_string);
@@ -36,7 +36,7 @@ if (message.containsIgnoreCase("getapi")){
 	}
 }
 // Save API ---------------------------------------
-else if(message.containsIgnoreCase("saveapi"))
+else if(message.containsIgnoreCase("save api key") || message.containsIgnoreCase("update api key") ||message.containsIgnoreCase("add api key") || message.containsIgnoreCase("change api key"))
 {
 	form = {"type":"form","title":"Vercel API Key","name":"apikey","hint":"Add your API Key from Vercel to use this extension","button_label":"Submit","inputs":{{"name":"apikey","label":"API Key","placeholder":"Enter your Vercel API Key here","min_length":"0","max_length":"36","mandatory":true,"type":"text"}},"action":{"type":"invoke.function","name":"saveApiKey"}};
 	return form;
@@ -44,7 +44,7 @@ else if(message.containsIgnoreCase("saveapi"))
 
 
 // Invite Member ----------------------------------
-else if (message.containsIgnoreCase("invite member")){
+else if (message.containsIgnoreCase("invite member") || message.containsIgnoreCase("add user") || message.containsIgnoreCase("invite user") || message.containsIgnoreCase("add member")){
 	team_id = "team_Db2XQGTUtAc8mAd56BvgkWGR";
 	return {
 		"type": "form",
@@ -114,7 +114,7 @@ else if (message.containsIgnoreCase("invite member")){
 
 
 // View Teams ------------------------------------
-else if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("my teams") || message.containsIgnoreCase("all teams"))
+else if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("my teams") || message.containsIgnoreCase("all teams") || message.containsIgnoreCase("teams"))
 {
 	text = "Select a team";
 	// Get Teams
@@ -164,7 +164,7 @@ else if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("
 	return response;
 }
 // Hello Handler -------------------------------------------------------
-else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
+else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY") || message.containsIgnoreCase("hello"))
 {
 	text = "Hi! How you doin'? :wink:";
 	response.put("text",text);
@@ -177,7 +177,7 @@ else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY"))
 		}});
 }
 // View Projects -------------------------------------------------------
-else if(message.containsIgnoreCase("View Projects"))
+else if(message.containsIgnoreCase("View Projects") || message.containsIgnoreCase("Show Projects") || message.containsIgnoreCase("My Projects"))
 {
 	
 	// query data
@@ -291,7 +291,7 @@ else if(message.containsIgnoreCase("View Projects"))
 	response.put("slides",slidesList);
 }
 // View Deployements ---------------------------------------------------
-else if(message.containsIgnoreCase("List Deployments"))
+else if(message.containsIgnoreCase("List Deployments") || message.containsIgnoreCase("Show Deployments") || message.containsIgnoreCase("My Deployments"))
 {
 	text = "Glad to hear that! :smile:";
 	// 	Get Projects
