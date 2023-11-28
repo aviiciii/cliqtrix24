@@ -2,7 +2,7 @@ form = {
 "type": "form",
 "title": "Vercel API Key",
 "name": "apikey",
-"hint": "Add your API Key from Vercel to use this extension",
+"hint": "Add / Update your API Key from Vercel to use this extension",
 "button_label": "Submit",
 "inputs": [
 {
