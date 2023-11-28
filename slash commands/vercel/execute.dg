@@ -48,14 +48,13 @@ if(selections.size() >0 ){
         {
             endpointUrl = endpointUrl + "?teamId=" + team_id;
         }
-        headers = Map();
-        headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+        
         res = invokeurl
         [
             url :endpointUrl
             type :GET
             headers:headers
-            connection:"vercel"
+
         ];
         projects = toJSONList(res.get("projects"));
         rows = Collection();
@@ -162,14 +161,13 @@ if(selections.size() >0 ){
         {
             endpointUrl = endpointUrl + "?teamId=" + team_id;
         }
-        headers = Map();
-        headers.put("Authorization","Bearer " + ACCESS_TOKEN);
+        
         res = invokeurl
         [
             url :endpointUrl
             type :GET
             headers:headers
-            connection:"vercel"
+
         ];
         deployments = toJSONList(res.get("deployments"));
         rows = Collection();

@@ -29,7 +29,7 @@ res = invokeurl
 	url :endpointUrl
 	type :GET
 	headers:headers
-	connection:"vercel"
+
 ];
 teams = toJSONList(res.get("teams"));
 options = list();
