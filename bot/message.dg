@@ -141,7 +141,7 @@ else if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("
 	slidesList = list();
 	slidesList0 = Map();
 	slidesList0.put("type","table");
-	slidesList0.put("title","Your Teams");
+	slidesList0.put("title","Your Teams:");
 	data = Map();
 	headersList = list();
 	headersList.add("Name");

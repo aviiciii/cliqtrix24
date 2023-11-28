@@ -21,45 +21,36 @@ else{
 	return response;
 }
 // --------XX DEFAULT CODE XX--------
+
 // Constants
-
-
 ID = arguments.get("key");
 
 // Get Team Details
 endpointUrl = BASEURL + "v13/deployments/" + ID;
 // Get Team Details
+
 res = invokeUrl[
 	url: endpointUrl
 	type: GET
 	headers: headers
-
 ];
-
 target = "Production";
 if(res.get("target") == null)
 {
 	target = "Pull Request Preview";
 }
-
-
 name = res.get("name");
 status = res.get("status");
 time = res.get("ready");
-
 ctime = toDateTime(time,"MM-d-yy");
-
-repo = "https://github.com/"+res.get("meta").get("githubOrg") + "/"+ res.get("meta").get("githubRepo");
-
-url = "https://"+res.get("url");
-
-commiter_login= res.get("meta").get("githubCommitAuthorLogin");
-commiter_name= res.get("meta").get("githubCommitAuthorName");
-
+repo = "https://github.com/" + res.get("meta").get("githubOrg") + "/" + res.get("meta").get("githubRepo");
+url = "https://" + res.get("url");
+commiter_login = res.get("meta").get("githubCommitAuthorLogin");
+commiter_name = res.get("meta").get("githubCommitAuthorName");
 response = Map();
 response.put("text","Details of your deployments");
 bot = Map();
-bot.put("name","Vercel ");
+bot.put("name","Vercel");
 response.put("bot",bot);
 card = Map();
 card.put("title","Deployment Details:");
