@@ -164,7 +164,7 @@ else if(message.containsIgnoreCase("list teams") || message.containsIgnoreCase("
 	return response;
 }
 // Hello Handler -------------------------------------------------------
-else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY") || message.containsIgnoreCase("hello"))
+else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY") || message.containsIgnoreCase("hello")|| message.containsIgnoreCase("back"))
 {
 	text = "Hi! How you doin'? :wink:";
 	response.put("text",text);
@@ -173,7 +173,19 @@ else if(message.containsIgnoreCase("HI") || message.containsIgnoreCase("HEY") ||
 			{"text":"View Projects"},
 			{"text":"List Deployments"},
 			{"text":"My Teams"},
-			{"text":"Change Team"}
+			{"text":"More"}
+		}});
+}
+else if(message.containsIgnoreCase("more") || message.containsIgnoreCase("more options") || message.containsIgnoreCase("options"))
+{	
+	text = "Here you go!";
+	response.put("text",text);
+	response.put("suggestions",
+		{"list":{
+			{"text":"Change Team"},
+			{"text":"Update API Key"},
+			{"text":"Show API Key"},
+			{"text":"Back"}
 		}});
 }
 // View Projects -------------------------------------------------------
